@@ -1,0 +1,9 @@
+{
+  "extends": ["airbnb-base"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "linebreak-style": "off",
+    "import/newline-after-import": "warn",
+    "arrow-parens": "off"
+  }
+}
