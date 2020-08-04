@@ -45,10 +45,7 @@ router.post('/signin', async (req, res) => {
     return res.status(401).send('Incorrect email or password!');
   }
 
-  const token = jwt.sign(
-    { _id: user._id, name: 'Elon' },
-    process.env.SECRET_TOKEN
-  );
+  const token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN);
   res.header('auth-token', token).send(token);
   // res.send('You have passed correct credentials.');
 });
