@@ -5,6 +5,9 @@
     "linebreak-style": "off",
     "import/newline-after-import": "warn",
     "arrow-parens": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "consistent-return": "off",
+    "no-underscore-dangle": "off",
+    "object-curly-newline": "off"
   }
 }
