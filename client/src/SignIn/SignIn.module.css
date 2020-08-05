@@ -1,0 +1,9 @@
+.SignIn__Inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.SignIn__Input {
+  width: 50%;
+}

@@ -1,0 +1,9 @@
+.SignUp__Inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.SignUp__Input {
+  width: 50%;
+}

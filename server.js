@@ -1,10 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const verifyToken = require('./middleware/verifyToken');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 dotenv.config();
 
@@ -19,6 +21,4 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use('/', authRoute);
 app.use('/', verifyToken, homeRoute);
 
-app.listen(5000, () => {
-  console.log('Server running on 5000');
-});
+app.listen(5000, () => {});
