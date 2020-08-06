@@ -5,6 +5,24 @@ const UserModel = require('../models/User');
 const { validateSignUp, validateSignIn } = require('../validation/validation');
 
 const router = express.Router();
+
+router.post('/', async (req, res) => {
+  const { email, password } = req.body;
+  const { error } = validateSignIn(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  const user = await UserModel.findOne({ email });
+  if (!user) return res.status(400).send('Incorrect email or password!');
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(401).send('Incorrect email or password!');
+  }
+
+  const token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN);
+  res.header('auth-token', token).send(token);
+});
+
 router.post('/signup', async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -30,24 +48,6 @@ router.post('/signup', async (req, res) => {
   } catch (err) {
     res.status(400).send(err);
   }
-});
-
-router.post('/signin', async (req, res) => {
-  const { email, password } = req.body;
-  const { error } = validateSignIn(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-
-  const user = await UserModel.findOne({ email });
-  if (!user) return res.status(400).send('Incorrect email or password!');
-
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    return res.status(401).send('Incorrect email or password!');
-  }
-
-  const token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN);
-  res.header('auth-token', token).send(token);
-  // res.send('You have passed correct credentials.');
 });
 
 module.exports = router;
