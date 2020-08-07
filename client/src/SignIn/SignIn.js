@@ -10,6 +10,7 @@ const SignIn = () => {
     email: '',
     password: ''
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = ({ target }) => {
     const { id, value } = target;
@@ -25,10 +26,10 @@ const SignIn = () => {
     axios
       .post(path, state)
       .then(res => {
-        console.log(res);
+        console.log(res.data);
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
+        setErrorMessage('Incorrect email and/or password!');
       });
   };
 
@@ -49,6 +50,8 @@ const SignIn = () => {
               placeholder="Email"
               label="Email"
               variant="outlined"
+              error={!!errorMessage}
+              helperText={errorMessage}
               required
             />
             <TextField
@@ -59,6 +62,8 @@ const SignIn = () => {
               placeholder="Password"
               label="Password"
               variant="outlined"
+              error={!!errorMessage}
+              helperText={errorMessage}
               required
             />
             <Button

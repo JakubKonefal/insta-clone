@@ -1,9 +1,71 @@
-.SignUp__Inputs {
+.SignUp {
   display: flex;
   flex-direction: column;
+  width: 20%;
+  height: 60%;
+}
+
+.SignUp__Card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  height: 80%;
+  border: 1px solid #ddd;
+  box-sizing: content-box;
+  padding: 2em;
+}
+
+.SignUp__InstaLabel {
+  flex-grow: 1;
+  margin: 0;
+  font-size: 5rem;
+  font-family: 'Lobster Two', cursive;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.SignUp__Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-grow: 3;
+  width: 100%;
+  padding: 3em;
 }
 
 .SignUp__Input {
-  width: 50%;
+  width: 80%;
+}
+
+.SignUp__Button {
+  width: 80%;
+  font-size: 1.3rem;
+}
+
+.SignUp__Card_2 {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  box-sizing: content-box;
+  padding: 2em;
+  text-align: center;
+}
+
+.SignUp__Card_2__Content {
+  font-size: 1.4rem;
+}
+
+.SignUp__Card_2__Link {
+  margin-left: 5px;
+  color: #303f9f;
+  text-decoration: none;
+}
+
+.SignUp__Card_2__Link:visited {
+  color: #303f9f;
+}
+
+.SignUp__Card_2__Link:hover {
+  color: #525faf;
 }
