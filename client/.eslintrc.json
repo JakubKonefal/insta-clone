@@ -7,6 +7,7 @@
     "comma-dangle": "off",
     "linebreak-style": "off",
     "object-curly-newline": "off",
-    "react/no-unescaped-entities": "off"
+    "react/no-unescaped-entities": "off",
+    "no-underscore-dangle": "off"
   }
 }
