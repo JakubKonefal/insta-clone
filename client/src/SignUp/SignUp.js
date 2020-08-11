@@ -3,9 +3,11 @@ import axios from 'axios';
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import { TextField, Button } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { register } from '../actions/authActions';
 import classes from './SignUp.module.css';
 
-const SignUp = () => {
+const SignUp = props => {
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
@@ -29,22 +31,23 @@ const SignUp = () => {
   };
   const handleFormSubmit = e => {
     e.preventDefault();
-    const path = 'http://localhost:5000/signup';
-    axios
-      .post(path, state)
-      .then(res => {
-        console.log(res);
-        history.push('/');
-      })
-      .catch(err => {
-        setErrorMessages({
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: '',
-          [err.response.data.path]: err.response.data.message
-        });
-      });
+    // const path = 'http://localhost:5000/signup';
+    // axios
+    //   .post(path, state)
+    //   .then(res => {
+    //     console.log(res);
+    //     history.push('/');
+    //   })
+    //   .catch(err => {
+    //     setErrorMessages({
+    //       firstName: '',
+    //       lastName: '',
+    //       email: '',
+    //       password: '',
+    //       [err.response.data.path]: err.response.data.message
+    //     });
+    //   });
+    props.register(state);
   };
 
   return (
@@ -127,4 +130,8 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { register })(SignUp);
