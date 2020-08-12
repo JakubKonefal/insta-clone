@@ -6,6 +6,7 @@
 }
 
 .SignUp__Card {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,6 +43,15 @@
 .SignUp__Button {
   width: 80%;
   font-size: 1.3rem;
+}
+
+.SignUp__SuccessIcon {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  color: green;
+  font-size: 3rem;
 }
 
 .SignUp__Card_2 {

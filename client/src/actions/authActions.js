@@ -1,28 +1,19 @@
 import axios from 'axios';
-import { REGISTER_FAIL, REGISTER_SUCCESS } from './types';
+import { REGISTER_SUCCESS, CLEAR_ERRORS } from './types';
+import { sendError } from './errorActions';
 
-export const register = ({
-  firstName,
-  lastName,
-  email,
-  password
-}) => dispatch => {
-  console.log('REGISTER FUNC');
-  console.log(firstName, lastName, email, password);
-  const newUser = { firstName, lastName, email, password };
-  console.log(newUser);
+export const register = newUser => dispatch => {
   axios
     .post('http://localhost:5000/signup', newUser)
-    .then(res => {
+    .then(() => {
       dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data
+        type: CLEAR_ERRORS
+      });
+      dispatch({
+        type: REGISTER_SUCCESS
       });
     })
     .catch(err => {
-      console.log(err.response.data);
-      dispatch({
-        type: REGISTER_FAIL
-      });
+      dispatch(sendError(err.response));
     });
 };

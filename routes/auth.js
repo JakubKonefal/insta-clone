@@ -26,15 +26,13 @@ router.post('/', async (req, res) => {
 router.post('/signup', async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
-  console.log(req.body);
-
   const { error } = validateSignUp(req.body);
   if (error) return res.status(400).send(error.details[0]);
 
   const emailExist = await UserModel.findOne({ email });
   if (emailExist) {
     return res.status(400).send({
-      path: 'email',
+      path: ['email'],
       message: 'Email already exists!'
     });
   }
