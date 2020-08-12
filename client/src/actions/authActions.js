@@ -4,7 +4,7 @@ import { sendError } from './errorActions';
 
 export const register = newUser => dispatch => {
   axios
-    .post('http://localhost:5000/signup', newUser)
+    .post('/signup', newUser)
     .then(() => {
       dispatch({
         type: CLEAR_ERRORS

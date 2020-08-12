@@ -22,9 +22,8 @@ const SignIn = () => {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    const path = 'http://localhost:5000';
     axios
-      .post(path, state)
+      .post('/', state)
       .then(res => {
         console.log(res.data);
       })
