@@ -1,4 +1,4 @@
-import { REGISTER_FAIL, CLEAR_ERRORS } from '../actions/types';
+import { GET_ERRORS, CLEAR_ERRORS } from '../actions/types';
 
 const initialState = {
   error: {
@@ -10,7 +10,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case REGISTER_FAIL:
+    case GET_ERRORS:
       return {
         error: action.payload.data,
         status: action.payload.status

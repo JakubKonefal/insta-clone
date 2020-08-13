@@ -12,11 +12,16 @@ router.post('/', async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   const user = await UserModel.findOne({ email });
-  if (!user) return res.status(400).send('Incorrect email or password!');
+  const errorMessage = {
+    path: ['auth'],
+    message: 'Incorrect email or password!'
+  };
+
+  if (!user) return res.status(400).send(errorMessage);
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    return res.status(401).send('Incorrect email or password!');
+    return res.status(401).send(errorMessage);
   }
 
   const token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN);

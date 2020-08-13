@@ -1,7 +1,7 @@
-import { REGISTER_FAIL, CLEAR_ERRORS } from './types';
+import { GET_ERRORS, CLEAR_ERRORS } from './types';
 
-export const sendError = error => ({
-  type: REGISTER_FAIL,
+export const getError = error => ({
+  type: GET_ERRORS,
   payload: error
 });
 

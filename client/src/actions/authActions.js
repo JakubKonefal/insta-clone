@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { REGISTER_SUCCESS, CLEAR_ERRORS } from './types';
-import { sendError } from './errorActions';
+import { REGISTER_SUCCESS, CLEAR_ERRORS, LOGIN_SUCCESS } from './types';
+import { getError } from './errorActions';
 
 export const register = newUser => dispatch => {
   axios
@@ -14,6 +14,20 @@ export const register = newUser => dispatch => {
       });
     })
     .catch(err => {
-      dispatch(sendError(err.response));
+      dispatch(getError(err.response));
+    });
+};
+
+export const login = credentials => dispatch => {
+  axios
+    .post('/', credentials)
+    .then(res => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(getError(err.response));
     });
 };

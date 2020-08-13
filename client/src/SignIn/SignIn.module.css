@@ -1,3 +1,10 @@
+.SignIn__Wraper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
 .SignIn {
   display: flex;
   flex-direction: column;
