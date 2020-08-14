@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { REGISTER_SUCCESS, CLEAR_ERRORS, LOGIN_SUCCESS } from './types';
+import {
+  REGISTER_SUCCESS,
+  CLEAR_ERRORS,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS
+} from './types';
 import { getError } from './errorActions';
 
 export const register = newUser => dispatch => {
@@ -28,6 +33,11 @@ export const login = credentials => dispatch => {
       });
     })
     .catch(err => {
+      console.log(err);
       dispatch(getError(err.response));
     });
 };
+
+export const logout = () => ({
+  type: LOGOUT_SUCCESS
+});

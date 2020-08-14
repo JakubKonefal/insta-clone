@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import { TextField, Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 import { login } from '../actions/authActions';
 import classes from './SignIn.module.css';
 
@@ -30,8 +30,8 @@ const SignIn = () => {
     dispatch(login(credentials));
   };
 
-  if (loginSuccess || token) {
-    history.push('/home');
+  if (token) {
+    return <Redirect to="/home" />;
   }
 
   return (

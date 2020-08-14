@@ -1,8 +1,13 @@
-import { LOGIN_SUCCESS, REGISTER_SUCCESS } from '../actions/types';
+import {
+  LOGIN_SUCCESS,
+  REGISTER_SUCCESS,
+  LOGOUT_SUCCESS
+} from '../actions/types';
 
 const initialState = {
   loginSuccess: false,
-  registerSuccess: false
+  registerSuccess: false,
+  logoutSuccess: false
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +22,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loginSuccess: true
+      };
+    case LOGOUT_SUCCESS:
+      localStorage.removeItem('auth-token');
+      return {
+        loginSuccess: false,
+        registerSuccess: false,
+        logoutSuccess: true
       };
     default:
       return state;
