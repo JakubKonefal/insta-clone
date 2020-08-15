@@ -12,6 +12,7 @@ dotenv.config();
 
 const authRoute = require('./routes/auth');
 const homeRoute = require('./routes/home');
+const profileRoute = require('./routes/profile');
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -20,5 +21,6 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.use('/', authRoute);
 app.use('/', verifyToken, homeRoute);
+app.use('/', verifyToken, profileRoute);
 
 app.listen(5000, () => {});

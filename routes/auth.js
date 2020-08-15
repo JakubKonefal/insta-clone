@@ -12,11 +12,11 @@ router.post('/', async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   const user = await UserModel.findOne({ email });
+
   const errorMessage = {
     path: ['auth'],
     message: 'Incorrect email or password!'
   };
-
   if (!user) return res.status(400).send(errorMessage);
 
   const isPasswordValid = await bcrypt.compare(password, user.password);

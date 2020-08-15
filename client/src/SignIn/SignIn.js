@@ -27,7 +27,11 @@ const SignIn = () => {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    dispatch(login(credentials));
+    try {
+      dispatch(login(credentials));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   if (token) {
