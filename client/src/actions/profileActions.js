@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { GET_PROFILE_INFO } from './types';
 
-export const getProfileInfo = (token, id) => dispatch => {
-  console.log(token);
-  console.log(id);
+export const getProfileInfo = token => dispatch => {
   axios
     .get('/profile', {
       headers: {

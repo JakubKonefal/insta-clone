@@ -5,7 +5,7 @@
 }
 
 .Profile__Card {
-  width: 50%;
+  width: 40%;
   margin-top: 50px;
   padding: 2em;
 }
@@ -15,4 +15,35 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 150px;
+}
+
+.Profile__UserAvatar {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 125px;
+  height: 125px;
+}
+
+.Profile__Name {
+  width: 80%;
+  margin: 10px 0;
+  font-size: 3rem;
+}
+
+.Profile__UserEmail {
+  width: 80%;
+  margin: 10px 0;
+  font-size: 2.5rem;
+}
+
+.Profile__UserStats {
+  width: 80%;
+  font-size: 2rem;
+}
+
+.Profile__StatItem {
+  margin-right: 10px;
 }
