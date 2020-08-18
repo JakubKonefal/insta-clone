@@ -1,13 +1,18 @@
 const express = require('express');
+const multer = require('multer');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const verifyToken = require('./middleware/verifyToken');
 
+const upload = multer();
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({}));
+app.use(upload.any());
+app.use(bodyParser.urlencoded({ extended: false }));
 dotenv.config();
 
 const authRoute = require('./routes/auth');

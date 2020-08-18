@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     min: 2,
     max: 30
   },
+  photo: {
+    type: String,
+    default: ''
+  },
   email: {
     type: String,
     required: true
@@ -26,6 +30,18 @@ const userSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now()
+  },
+  posts: {
+    type: Array,
+    default: []
+  },
+  followers: {
+    type: Array,
+    default: []
+  },
+  following: {
+    type: Array,
+    default: []
   }
 });
 
