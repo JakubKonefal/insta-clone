@@ -1,7 +1,5 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const FormData = require('form-data');
-const axios = require('../config/axios');
 const userModel = require('../models/User');
 
 const router = express.Router();
@@ -18,32 +16,37 @@ router.get('/profile', async (req, res) => {
 });
 
 router.post('/profile', async (req, res) => {
-  const token = req.header('token');
-  // const image = req.header('image');
-  const { _id } = jwt.decode(token);
-  console.log(req.body);
+  if (req.body.verifyToken) {
+    return res.status(200).send(req.user);
+  }
 
-  console.log('before fd');
-  const data = new FormData();
-  // data.append('file', req.body);
-  data.append('upload_preset', 'insta-clone');
-  data.append('cloud_name', 'cloud0');
-  console.log('after fd');
+  const { _id } = req.user;
+  const { imageUrl } = req.body;
+  try {
+    const updatedUser = await userModel.findOneAndUpdate(
+      { _id },
+      { photo: imageUrl },
+      { new: true, useFindAndModify: true }
+    );
+    res.status(200).send(updatedUser);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 
-  // const { image } = req.body;
-  // const data = new FormData();
-  // data.append('file', image);
-  // data.append('upload_preset', 'insta-clone');
-  // data.append('cloud_name', 'cloud0');
-  // console.log(image);
-  // axios
-  //   .post('/image/upload', data)
-  //   .then(response => {
-  //     console.log(response.data);
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
+router.delete('/profile', async (req, res) => {
+  const { _id } = req.user;
+
+  try {
+    const updatedUser = await userModel.findOneAndUpdate(
+      { _id },
+      { photo: '' },
+      { new: true, useFindAndModify: true }
+    );
+    res.status(200).send(updatedUser);
+  } catch (err) {
+    res.status(400).send(err);
+  }
 });
 
 module.exports = router;

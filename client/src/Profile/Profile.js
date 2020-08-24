@@ -3,7 +3,11 @@ import StylesProvider from '@material-ui/styles/StylesProvider';
 import { Avatar, Button } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProfileInfo, submitProfileImage } from '../actions/profileActions';
+import {
+  getProfileInfo,
+  updateProfileImg,
+  deleteProfileImg
+} from '../actions/profileActions';
 import Navbar from '../shared/Navbar/Navbar';
 import Spinner from '../shared/Spinner/Spinner';
 import classes from './Profile.module.css';
@@ -34,14 +38,22 @@ const Profile = () => {
     setAvatarMenuOpen(false);
   };
 
+  const handleImageSubmit = () => {
+    const token = localStorage.getItem('auth-token');
+    dispatch(updateProfileImg(token, selectedImage));
+    clearSelectedImage();
+  };
+
+  const handleImageDelete = () => {
+    const token = localStorage.getItem('auth-token');
+    dispatch(deleteProfileImg(token));
+    clearSelectedImage();
+    setAvatarMenuOpen(false);
+  };
+
   const clearSelectedImage = () => {
     setSelectedImage(null);
     setPreviewFile('');
-  };
-
-  const handleImageSubmit = () => {
-    const token = localStorage.getItem('auth-token');
-    dispatch(submitProfileImage(token, selectedImage));
   };
 
   return (
@@ -54,84 +66,91 @@ const Profile = () => {
           <div className={classes.Profile__Card}>
             <div className={classes.Profile__UserInfo}>
               <div className={classes.Profile__Avatar}>
-                <Avatar
-                  className={classes.Profile__UserAvatar}
-                  src={profile.photo || defaultUserPic}
-                  alt="profile pic"
-                  onClick={() => setAvatarMenuOpen(!avatarMenuOpen)}
-                />
-                <Avatar
-                  className={
-                    previewFile
-                      ? classes.Profile__AvatarPreview
-                      : classes.Hidden
-                  }
-                  src={previewFile}
-                  alt="preview"
-                />
-                <Close
-                  className={
-                    previewFile
-                      ? classes.Profile__AvatarPreviewClose
-                      : classes.Hidden
-                  }
-                  onClick={() => clearSelectedImage()}
-                />
-                <Button
-                  className={
-                    previewFile
-                      ? classes.Profile__AvatarAcceptBtn
-                      : classes.Hidden
-                  }
-                  onClick={() => handleImageSubmit()}
-                  variant="contained"
-                  color="primary"
-                >
-                  add/update
-                </Button>
-                <div
-                  className={
-                    avatarMenuOpen
-                      ? classes.Profile__AvatarMenu
-                      : classes.Hidden
-                  }
-                >
-                  <label
-                    className={`${classes.Profile__AvatarAction} ${classes.Profile__AvatarActions_Add}`}
-                    htmlFor="avatar"
-                  >
-                    add/update
-                    <input
-                      type="file"
-                      id="avatar"
-                      onChange={handleImageSelect}
+                {profile.isImgLoading ? (
+                  <Spinner />
+                ) : (
+                  <>
+                    <Avatar
+                      className={classes.Profile__UserAvatar}
+                      src={profile.user.photo || defaultUserPic}
+                      alt="profile pic"
+                      onClick={() => setAvatarMenuOpen(!avatarMenuOpen)}
                     />
-                  </label>
-                  <span
-                    className={`${classes.Profile__AvatarAction} ${classes.Profile__AvatarActions_Delete}`}
-                    variant="contained"
-                    color="secondary"
-                  >
-                    delete
-                  </span>
-                </div>
+                    <Avatar
+                      className={
+                        previewFile
+                          ? classes.Profile__AvatarPreview
+                          : classes.Hidden
+                      }
+                      src={previewFile}
+                      alt="preview"
+                    />
+                    <Close
+                      className={
+                        previewFile
+                          ? classes.Profile__AvatarPreviewClose
+                          : classes.Hidden
+                      }
+                      onClick={() => clearSelectedImage()}
+                    />
+                    <Button
+                      className={
+                        previewFile
+                          ? classes.Profile__AvatarAcceptBtn
+                          : classes.Hidden
+                      }
+                      onClick={() => handleImageSubmit()}
+                      variant="contained"
+                      color="primary"
+                    >
+                      add/update
+                    </Button>
+                    <div
+                      className={
+                        avatarMenuOpen
+                          ? classes.Profile__AvatarMenu
+                          : classes.Hidden
+                      }
+                    >
+                      <label
+                        className={`${classes.Profile__AvatarAction} ${classes.Profile__AvatarActions_Add}`}
+                        htmlFor="avatar"
+                      >
+                        add/update
+                        <input
+                          type="file"
+                          id="avatar"
+                          name="avatar"
+                          onChange={handleImageSelect}
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        className={`${classes.Profile__AvatarAction} ${classes.Profile__AvatarActions_Delete}`}
+                        onClick={() => handleImageDelete()}
+                      >
+                        delete
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
 
               <h3 className={classes.Profile__Name}>
-                {`${profile.firstName}  ${profile.lastName}`}
+                {`${profile.user.firstName}  ${profile.user.lastName}`}
               </h3>
               <h4 className={classes.Profile__UserEmail}>
-                {`${profile.email}`}
+                {`${profile.user.email}`}
               </h4>
               <div className={classes.Profile__UserStats}>
                 <span className={classes.Profile__StatItem}>
-                  {`${profile.posts.length} posts`}
+                  {`${profile.user.posts.length} posts`}
                 </span>
                 <span className={classes.Profile__StatItem}>
-                  {`${profile.followers.length} followers`}
+                  {`${profile.user.followers.length} followers`}
                 </span>
                 <span className={classes.Profile__StatItem}>
-                  {`${profile.following.length} following`}
+                  {`${profile.user.following.length} following`}
                 </span>
               </div>
             </div>
