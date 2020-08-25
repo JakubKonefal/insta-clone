@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import { Avatar, Button } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import { Close, CloudUploadOutlined, DeleteOutline } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getProfileInfo,
@@ -32,10 +32,12 @@ const Profile = () => {
 
   const handleImageSelect = e => {
     const image = e.target.files[0];
-    const imagePreview = URL.createObjectURL(image);
-    setSelectedImage(image);
-    setPreviewFile(imagePreview);
-    setAvatarMenuOpen(false);
+    if (image) {
+      const imagePreview = URL.createObjectURL(image);
+      setSelectedImage(image);
+      setPreviewFile(imagePreview);
+      setAvatarMenuOpen(false);
+    }
   };
 
   const handleImageSubmit = () => {
@@ -116,7 +118,10 @@ const Profile = () => {
                         className={`${classes.Profile__AvatarAction} ${classes.Profile__AvatarActions_Add}`}
                         htmlFor="avatar"
                       >
-                        add/update
+                        <CloudUploadOutlined
+                          className={classes.Profile__AvatarMenuIcon}
+                        />
+                        Add / update profile picture
                         <input
                           type="file"
                           id="avatar"
@@ -129,7 +134,10 @@ const Profile = () => {
                         className={`${classes.Profile__AvatarAction} ${classes.Profile__AvatarActions_Delete}`}
                         onClick={() => handleImageDelete()}
                       >
-                        delete
+                        <DeleteOutline
+                          className={classes.Profile__AvatarMenuIcon}
+                        />
+                        Delete profile picture
                       </button>
                     </div>
                   </>

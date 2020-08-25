@@ -26,6 +26,8 @@
   width: 125px;
   height: 125px;
   border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0px 0px 10px 2px #ddd;
 }
 
 .Profile__UserAvatar {
@@ -43,33 +45,40 @@
 
 .Profile__AvatarMenu {
   position: absolute;
-  top: 0;
-  right: -85%;
+  bottom: -100%;
+  left: 50%;
   display: flex;
   flex-direction: column;
+  width: 200%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  padding: 0.5em;
+  box-shadow: 0px 0px 10px 2px #ddd;
+}
+
+.Profile__AvatarMenuIcon {
+  margin-right: 7px;
+  font-size: 2rem;
 }
 
 .Profile__AvatarAction {
+  display: flex;
+  align-items: center;
   padding: 1em;
-  color: white;
   text-align: center;
-  text-transform: uppercase;
-  border-radius: 10px;
+  border-radius: 3px;
+  font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
 }
 
 .Profile__AvatarAction:hover {
-  opacity: 0.9;
-}
-
-.Profile__AvatarActions_Add {
-  background-color: green;
+  background-color: #eee;
 }
 
 .Profile__AvatarActions_Delete {
-  margin-top: 10px;
-  background-color: red;
+  background-color: transparent;
+  border: none;
 }
 
 .Profile__AvatarPreview {
@@ -78,6 +87,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: #fff;
   z-index: 10;
 }
 
@@ -100,6 +110,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .Profile__Name {

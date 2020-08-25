@@ -68,8 +68,6 @@ export const deleteProfileImg = token => async dispatch => {
     }
   });
 
-  console.log(data);
-
   storage
     .ref('/profile-pics')
     .child(data._id)
