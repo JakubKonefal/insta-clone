@@ -14,19 +14,19 @@ import classes from './Profile.module.css';
 import defaultUserPic from '../assets/default-user-pic.png';
 
 const Profile = () => {
-  const dispatch = useDispatch();
-  const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [previewFile, setPreviewFile] = useState('');
-
   useEffect(() => {
     fetchProfileInfo();
   }, []);
 
+  const token = localStorage.getItem('auth-token');
+  const dispatch = useDispatch();
+
+  const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [previewFile, setPreviewFile] = useState('');
   const profile = useSelector(state => state.profile);
 
   const fetchProfileInfo = () => {
-    const token = localStorage.getItem('auth-token');
     dispatch(getProfileInfo(token));
   };
 
@@ -41,13 +41,11 @@ const Profile = () => {
   };
 
   const handleImageSubmit = () => {
-    const token = localStorage.getItem('auth-token');
     dispatch(updateProfileImg(token, selectedImage));
     clearSelectedImage();
   };
 
   const handleImageDelete = () => {
-    const token = localStorage.getItem('auth-token');
     dispatch(deleteProfileImg(token));
     clearSelectedImage();
     setAvatarMenuOpen(false);
@@ -125,6 +123,7 @@ const Profile = () => {
                         <input
                           type="file"
                           id="avatar"
+                          key={selectedImage}
                           name="avatar"
                           onChange={handleImageSelect}
                         />

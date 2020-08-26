@@ -12,10 +12,12 @@
   align-self: center;
   justify-content: center;
   width: 25%;
-  height: 60%;
+  min-height: 30%;
+  max-height: 85%;
   padding: 2em;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px 2px #ddd;
+  border: 2px solid #aaa;
+  box-shadow: 0px 0px 10px 2px #ccc;
 }
 
 .Post__Header {
@@ -45,10 +47,86 @@
 }
 
 .Post__Description {
-  height: 75%;
-  font-size: 2rem;
+  height: 100px;
+  font-size: 1.6rem;
+}
+
+.Post__PreviewFileWraper {
+  position: relative;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin: 1em 0;
+}
+
+.Post__PreviewFileWraper::-webkit-scrollbar {
+  width: 7px;
+}
+
+.Post__PreviewFileWraper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.Post__PreviewFileWraper::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.Post__PreviewFileWraper::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.Post__PreviewFile {
+  width: 100%;
+}
+
+.Post__PreviewFileWraper:hover {
+  opacity: 0.9;
+}
+
+.Post__PreviewFileWraper:hover .Post__PreviewFileClose {
+  display: block;
+}
+
+.Post__PreviewFileClose {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 2.5rem;
+  padding: 3px;
+  border-radius: 50%;
+  background-color: #aaa;
+  color: black;
+  cursor: pointer;
+}
+
+.Post__PreviewFileClose:hover {
+  background-color: #ccc;
+  color: #444;
+}
+
+.Post__AddImage {
+  align-self: flex-end;
+  width: fit-content;
+  margin-top: auto;
+  color: #080;
+  cursor: pointer;
+}
+
+.Post__AddImage:hover {
+  color: #0a0;
+}
+
+.Post__AddImageIcon {
+  font-size: 3rem;
 }
 
 .Post__Button {
   margin-top: auto;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.Hidden {
+  display: none;
 }
