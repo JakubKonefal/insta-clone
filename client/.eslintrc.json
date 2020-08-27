@@ -17,6 +17,7 @@
     "react/jsx-curly-newline": "off",
     "react/button-has-type": "warn",
     "no-use-before-define": "off",
-    "react/jsx-no-duplicate-props": "off"
+    "react/jsx-no-duplicate-props": "off",
+    "operator-linebreak": "warn"
   }
 }

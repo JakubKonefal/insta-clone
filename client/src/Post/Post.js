@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, Avatar } from '@material-ui/core';
-import { ImageOutlined, CloseOutlined } from '@material-ui/icons';
+import { Button, TextField, Avatar, Modal } from '@material-ui/core';
+import {
+  ImageOutlined,
+  CloseOutlined,
+  CheckOutlined
+} from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import Spinner from '../shared/Spinner/Spinner';
@@ -22,6 +26,7 @@ const Post = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewFile, setPreviewFile] = useState('');
   const profile = useSelector(state => state.profile);
+  const { isSending, success } = useSelector(state => state.posts.createdPost);
 
   const fetchProfileInfo = () => {
     dispatch(getProfileInfo(token));
@@ -30,6 +35,8 @@ const Post = () => {
   const handleFormSubmit = e => {
     e.preventDefault();
     dispatch(addPost(postDescription, selectedImage, token));
+    clearSelectedImage();
+    setPostDescription('');
   };
 
   const handleInputChange = e => {
@@ -65,15 +72,18 @@ const Post = () => {
                 alt="profile-pic"
               />
               <h3 className={classes.Post__HeaderTitle}>Create a Post</h3>
+              {success ? (
+                <CheckOutlined className={classes.Post__SuccessIcon} />
+              ) : null}
             </div>
             <TextField
               className={classes.Post__Description}
               id="description"
+              value={postDescription}
               name="description"
               multiline
               placeholder="What's on your mind?"
               variant="outlined"
-              maxlength="20"
               InputLabelProps={{
                 style: {
                   fontSize: '1.6rem'
@@ -81,7 +91,7 @@ const Post = () => {
               }}
               inputProps={{
                 style: { height: '100%' },
-                maxlength: '250'
+                maxLength: '250'
               }}
               InputProps={{
                 style: { height: '100%', fontSize: '1.6rem' }
@@ -125,11 +135,15 @@ const Post = () => {
               variant="contained"
               color="primary"
               size="large"
+              disabled={isSending}
             >
               Add post
             </Button>
           </form>
         )}
+        <Modal className={classes.Post__Modal} open={isSending}>
+          <Spinner />
+        </Modal>
       </div>
     </StylesProvider>
   );
