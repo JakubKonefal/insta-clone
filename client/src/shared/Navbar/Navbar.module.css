@@ -9,6 +9,8 @@
   padding: 1em 5em;
   box-sizing: border-box;
   box-shadow: 0 4px 2px -2px gray;
+  background-color: #fff;
+  z-index: 100;
 }
 
 .Navbar__Title {

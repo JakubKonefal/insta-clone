@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, Avatar, Modal } from '@material-ui/core';
+import {
+  Button,
+  TextField,
+  Avatar,
+  Modal,
+  DialogContent
+} from '@material-ui/core';
 import {
   ImageOutlined,
   CloseOutlined,
@@ -34,7 +40,17 @@ const Post = () => {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    dispatch(addPost(postDescription, selectedImage, token));
+    const { _id, firstName, lastName, photo } = profile.user;
+    const post = {
+      description: postDescription,
+      author: {
+        _id,
+        firstName,
+        lastName,
+        photo
+      }
+    };
+    dispatch(addPost(post, selectedImage, token));
     clearSelectedImage();
     setPostDescription('');
   };
@@ -142,7 +158,9 @@ const Post = () => {
           </form>
         )}
         <Modal className={classes.Post__Modal} open={isSending}>
-          <Spinner />
+          <DialogContent>
+            <Spinner />
+          </DialogContent>
         </Modal>
       </div>
     </StylesProvider>

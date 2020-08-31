@@ -7,14 +7,7 @@ router.post('/post', async (req, res) => {
   if (req.body.verifyToken) {
     return res.status(200).send(req.user);
   }
-
-  const { _id, description, image } = req.body;
-  const newPost = new PostModel({
-    _id,
-    author: req.user._id,
-    description,
-    image
-  });
+  const newPost = new PostModel(req.body);
 
   try {
     const savedPost = await newPost.save();

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import uniqid from 'uniqid';
 import {
   ADD_POST,
@@ -7,15 +8,14 @@ import {
   ALL_POSTS_LOADING,
   GET_ALL_POSTS
 } from './types';
-import { axiosLocal } from '../config/axios';
 import { storage } from '../config/firebase';
 
-export const addPost = (description, image, token) => async dispatch => {
+export const addPost = (post, image, token) => async dispatch => {
   dispatch({ type: ADD_POST });
 
   const {
     data: { _id }
-  } = await axiosLocal.post(
+  } = await axios.post(
     '/post',
     { verifyToken: true },
     {
@@ -33,21 +33,24 @@ export const addPost = (description, image, token) => async dispatch => {
     imageUrl = await ref.getDownloadURL();
   }
 
-  axiosLocal
+  const newPost = {
+    ...post,
+    image: imageUrl,
+    _id: postId
+  };
+
+  axios
     .post(
       '/post',
-      {
-        description,
-        image: imageUrl,
-        _id: postId
-      },
+
+      newPost,
       {
         headers: {
           token
         }
       }
     )
-    .then(() => {
+    .then(res => {
       dispatch({ type: ADD_POST_SUCCESS });
       dispatch({
         type: CLEAR_ERRORS
@@ -60,7 +63,7 @@ export const addPost = (description, image, token) => async dispatch => {
 
 export const getAllPosts = token => async dispatch => {
   dispatch({ type: ALL_POSTS_LOADING });
-  axiosLocal
+  axios
     .get('/home', {
       headers: {
         token

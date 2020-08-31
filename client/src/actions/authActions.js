@@ -19,6 +19,7 @@ export const register = newUser => dispatch => {
       });
     })
     .catch(err => {
+      console.log(err.response);
       dispatch(getError(err.response));
     });
 };
@@ -33,7 +34,7 @@ export const login = credentials => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err);
+      console.log(err.response);
       dispatch(getError(err.response));
     });
 };

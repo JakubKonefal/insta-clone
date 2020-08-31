@@ -1,4 +1,4 @@
-import { axiosLocal } from '../config/axios';
+import axios from 'axios';
 import { storage } from '../config/firebase';
 import {
   GET_PROFILE_INFO,
@@ -9,7 +9,7 @@ import {
 } from './types';
 
 export const getProfileInfo = token => dispatch => {
-  axiosLocal
+  axios
     .get('/profile', {
       headers: {
         token
@@ -30,7 +30,7 @@ export const updateProfileImg = (token, image) => async dispatch => {
   });
   const {
     data: { _id }
-  } = await axiosLocal.post(
+  } = await axios.post(
     '/profile',
     { verifyToken: true },
     {
@@ -41,7 +41,7 @@ export const updateProfileImg = (token, image) => async dispatch => {
   );
   const { ref } = await storage.ref('/profile-pics').child(_id).put(image);
   const imageUrl = await ref.getDownloadURL();
-  const { data } = await axiosLocal.post(
+  const { data } = await axios.post(
     '/profile',
     {
       imageUrl
@@ -62,7 +62,7 @@ export const deleteProfileImg = token => async dispatch => {
   dispatch({
     type: PROFILE_IMG_LOADING
   });
-  const { data } = await axiosLocal.delete('/profile', {
+  const { data } = await axios.delete('/profile', {
     headers: {
       token
     }

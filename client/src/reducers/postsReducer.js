@@ -8,7 +8,10 @@ import {
 const initialState = {
   allPosts: [],
   allPostsLoading: true,
-  createdPost: {}
+  createdPost: {
+    isSending: false,
+    success: false
+  }
 };
 
 const postReducer = (state = initialState, action) => {

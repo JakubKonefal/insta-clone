@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllPosts } from '../actions/postActions';
 import Navbar from '../shared/Navbar/Navbar';
-import Posts from './Posts';
+import Spinner from '../shared/Spinner/Spinner';
+import PostsList from './PostsList';
 import classes from './Home.module.css';
 
 const Home = () => {
@@ -13,7 +14,7 @@ const Home = () => {
   const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
 
-  const { allPosts } = useSelector(state => state.posts);
+  const { allPosts, allPostsLoading } = useSelector(state => state.posts);
 
   const fetchInitialPosts = () => {
     dispatch(getAllPosts(token));
@@ -22,8 +23,7 @@ const Home = () => {
   return (
     <div className={classes.Home}>
       <Navbar />
-      <h1>HOME</h1>
-      <Posts posts={allPosts} />
+      {allPostsLoading ? <Spinner /> : <PostsList posts={allPosts} />}
     </div>
   );
 };
