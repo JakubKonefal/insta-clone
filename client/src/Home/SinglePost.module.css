@@ -60,15 +60,26 @@
   font-weight: bold;
 }
 
-.Post__HeartBtn {
+.Post__HeartBtn_Liked {
   margin-right: 7px;
   font-size: 2.1rem;
   color: red;
   cursor: pointer;
 }
 
-.Post__HeartBtn:hover {
-  color: #a00;
+.Post__HeartBtn_Liked:hover {
+  color: black;
+}
+
+.Post__HeartBtn_Unliked {
+  margin-right: 7px;
+  font-size: 2.1rem;
+  color: black;
+  cursor: pointer;
+}
+
+.Post__HeartBtn_Unliked:hover {
+  color: red;
 }
 
 .Post__Description {

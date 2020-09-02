@@ -1,29 +1,14 @@
 const mongoose = require('mongoose');
 
-const authorSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-    required: true
-  },
-  photo: {
-    type: String
-  },
-  firstName: {
-    type: String,
-    required: true
-  },
-  lastName: {
-    type: String,
-    required: true
-  }
-});
-
 const postSchema = new mongoose.Schema({
   _id: {
     type: String,
     required: true
   },
-  author: authorSchema,
+  author: {
+    type: String,
+    required: true
+  },
   description: {
     type: String,
     maxlength: 250,
@@ -36,6 +21,10 @@ const postSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  likes: {
+    type: Array,
+    default: []
   }
 });
 

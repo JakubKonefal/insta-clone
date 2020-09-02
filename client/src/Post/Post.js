@@ -40,15 +40,10 @@ const Post = () => {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    const { _id, firstName, lastName, photo } = profile.user;
+    const { _id } = profile.user;
     const post = {
       description: postDescription,
-      author: {
-        _id,
-        firstName,
-        lastName,
-        photo
-      }
+      author: _id
     };
     dispatch(addPost(post, selectedImage, token));
     clearSelectedImage();

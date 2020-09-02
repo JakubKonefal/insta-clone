@@ -2,13 +2,21 @@ import React, { useState } from 'react';
 import { Card, CardContent, Avatar, Collapse, Button } from '@material-ui/core';
 import { Favorite, ArrowDownward } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import StylesProvider from '@material-ui/styles/StylesProvider';
+import { likePost } from '../actions/postActions';
 import classes from './SinglePost.module.css';
 import defaultUserPic from '../assets/default-user-pic.png';
 
-const SinglePost = ({ description, author, image }) => {
+const SinglePost = ({ description, author, likes, image, id }) => {
+  const dispatch = useDispatch();
+
   const [comment, setComment] = useState('');
   const [showInput, setShowInput] = useState(false);
+  const token = localStorage.getItem('auth-token');
+  const clientId = useSelector(state => state.auth.user);
+
+  const alreadyLiked = likes.includes(clientId);
 
   return (
     <StylesProvider injectFirst>
@@ -31,8 +39,15 @@ const SinglePost = ({ description, author, image }) => {
             <img className={classes.Post__Image} src={image} alt="post" />
           ) : null}
           <div className={classes.Post__Likes}>
-            <Favorite className={classes.Post__HeartBtn} />
-            <span>10</span>
+            <Favorite
+              className={
+                alreadyLiked
+                  ? classes.Post__HeartBtn_Liked
+                  : classes.Post__HeartBtn_Unliked
+              }
+              onClick={() => dispatch(likePost(token, id))}
+            />
+            <span>{likes.length}</span>
           </div>
           <div className={classes.Post__Description}>
             <Link

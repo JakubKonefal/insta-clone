@@ -38,6 +38,7 @@ const postReducer = (state = initialState, action) => {
         allPosts: action.payload,
         allPostsLoading: false
       };
+
     default:
       return state;
   }

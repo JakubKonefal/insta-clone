@@ -1,14 +1,18 @@
+import jwt from 'jsonwebtoken';
 import {
   LOGIN_SUCCESS,
   REGISTER_SUCCESS,
   LOGOUT_SUCCESS
 } from '../actions/types';
 
+const token = localStorage.getItem('auth-token');
+const { _id } = jwt.decode(token);
+
 const initialState = {
   loginSuccess: false,
   registerSuccess: false,
   logoutSuccess: false,
-  user: null
+  user: _id
 };
 
 export default (state = initialState, action) => {

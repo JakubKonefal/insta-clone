@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllPosts } from '../actions/postActions';
 import Navbar from '../shared/Navbar/Navbar';
@@ -11,12 +11,11 @@ const Home = () => {
     fetchInitialPosts();
   }, []);
 
-  const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
-
   const { allPosts, allPostsLoading } = useSelector(state => state.posts);
 
   const fetchInitialPosts = () => {
+    const token = localStorage.getItem('auth-token');
     dispatch(getAllPosts(token));
   };
 

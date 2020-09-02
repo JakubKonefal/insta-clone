@@ -6,7 +6,8 @@ import {
   GET_ERRORS,
   CLEAR_ERRORS,
   ALL_POSTS_LOADING,
-  GET_ALL_POSTS
+  GET_ALL_POSTS,
+  LIKE_POST
 } from './types';
 import { storage } from '../config/firebase';
 
@@ -50,7 +51,7 @@ export const addPost = (post, image, token) => async dispatch => {
         }
       }
     )
-    .then(res => {
+    .then(() => {
       dispatch({ type: ADD_POST_SUCCESS });
       dispatch({
         type: CLEAR_ERRORS
@@ -71,6 +72,25 @@ export const getAllPosts = token => async dispatch => {
     })
     .then(res => {
       dispatch({ type: GET_ALL_POSTS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response });
+    });
+};
+
+export const likePost = (token, postId) => async dispatch => {
+  axios
+    .post(
+      '/home/like',
+      { postId },
+      {
+        headers: {
+          token
+        }
+      }
+    )
+    .then(res => {
+      dispatch({ type: LIKE_POST, payload: res.data.likes });
     })
     .catch(err => {
       dispatch({ type: GET_ERRORS, payload: err.response });
