@@ -14,6 +14,7 @@ export const ALL_POSTS_LOADING = 'GET_ALL_POSTS';
 export const GET_ALL_POSTS = 'GET_ALL_POSTS';
 
 export const LIKE_POST = 'LIKE_POST';
+export const ADD_COMMENT = 'ADD_COMMENT';
 
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

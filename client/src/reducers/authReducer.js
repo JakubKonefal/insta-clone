@@ -6,13 +6,17 @@ import {
 } from '../actions/types';
 
 const token = localStorage.getItem('auth-token');
-const { _id } = jwt.decode(token);
+
+const getIdFromToken = authToken => {
+  const { _id } = authToken ? jwt.decode(authToken) : { _id: '' };
+  return _id;
+};
 
 const initialState = {
   loginSuccess: false,
   registerSuccess: false,
   logoutSuccess: false,
-  user: _id
+  user: getIdFromToken(token)
 };
 
 export default (state = initialState, action) => {
@@ -27,7 +31,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loginSuccess: true,
-        user: action.payload
+        user: getIdFromToken(action.payload)
       };
     case LOGOUT_SUCCESS:
       localStorage.removeItem('auth-token');

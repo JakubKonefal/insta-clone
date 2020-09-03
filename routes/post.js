@@ -1,7 +1,9 @@
 const express = require('express');
+const uniqid = require('uniqid');
+const PostModel = require('../models/Post');
+const UserModel = require('../models/User');
 
 const router = express.Router();
-const PostModel = require('../models/Post');
 
 router.post('/post', async (req, res) => {
   if (req.body.verifyToken) {
@@ -20,11 +22,7 @@ router.post('/home/like', async (req, res) => {
   const { postId } = req.body;
 
   const { likes } = await PostModel.findById(postId);
-
-  console.log(likes);
-  console.log(postId, req.user._id);
   const alreadyLiked = likes.includes(req.user._id);
-  console.log(alreadyLiked, 'ALREADY LIKED');
 
   if (alreadyLiked) {
     const updatedLikes = likes.filter(id => id !== req.user._id);
@@ -36,7 +34,7 @@ router.post('/home/like', async (req, res) => {
         useFindAndModify: false
       }
     );
-    res.status(200).send(post.likes);
+    res.status(200).send(req.user._id);
   } else {
     const post = await PostModel.findOneAndUpdate(
       { _id: postId },
@@ -46,7 +44,44 @@ router.post('/home/like', async (req, res) => {
         useFindAndModify: false
       }
     );
-    res.status(200).send(post.likes);
+    res.status(200).send(req.user._id);
+  }
+});
+
+router.post('/home/comment', async (req, res) => {
+  const { firstName, lastName } = await UserModel.findById(
+    req.body.comment.author
+  );
+
+  const comment = {
+    ...req.body.comment,
+    author: {
+      id: req.body.comment.author,
+      firstName,
+      lastName
+    },
+    id: uniqid()
+  };
+
+  try {
+    const updatedPost = await PostModel.findOneAndUpdate(
+      {
+        _id: comment.postId
+      },
+      {
+        $addToSet: {
+          comments: comment
+        }
+      },
+      {
+        new: true,
+        useFindAndModify: false
+      }
+    );
+
+    res.status(200).send(updatedPost);
+  } catch (err) {
+    res.status(400).send(err);
   }
 });
 

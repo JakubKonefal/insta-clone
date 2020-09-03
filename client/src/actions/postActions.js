@@ -7,7 +7,8 @@ import {
   CLEAR_ERRORS,
   ALL_POSTS_LOADING,
   GET_ALL_POSTS,
-  LIKE_POST
+  LIKE_POST,
+  ADD_COMMENT
 } from './types';
 import { storage } from '../config/firebase';
 
@@ -78,7 +79,7 @@ export const getAllPosts = token => async dispatch => {
     });
 };
 
-export const likePost = (token, postId) => async dispatch => {
+export const likePost = (token, postId) => dispatch => {
   axios
     .post(
       '/home/like',
@@ -90,7 +91,27 @@ export const likePost = (token, postId) => async dispatch => {
       }
     )
     .then(res => {
-      dispatch({ type: LIKE_POST, payload: res.data.likes });
+      dispatch({ type: LIKE_POST, payload: { uid: res.data, postId } });
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response });
+    });
+};
+
+export const addComment = (token, comment) => async dispatch => {
+  axios
+    .post(
+      '/home/comment',
+      { comment },
+      {
+        headers: {
+          token
+        }
+      }
+    )
+    .then(res => {
+      console.log(res.data);
+      dispatch({ type: ADD_COMMENT, payload: res.data });
     })
     .catch(err => {
       dispatch({ type: GET_ERRORS, payload: err.response });

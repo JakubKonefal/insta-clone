@@ -1,0 +1,40 @@
+.Comment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.25em;
+  box-sizing: border-box;
+  padding: 0.75em 1.25em;
+  background-color: #f0f2f5;
+  border-radius: 15px;
+}
+
+.Comment__Author {
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+}
+
+.Comment__Avatar {
+  width: 35px;
+  height: 35px;
+}
+
+.Comment__AuthorName {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: left;
+}
+
+.Comment__AuthorName:hover {
+  text-decoration: underline;
+}
+
+.Comment__Content {
+  width: 100%;
+  margin: 0.5em 0;
+  font-size: 1.4rem;
+  text-align: left;
+}
