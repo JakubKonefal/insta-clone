@@ -10,9 +10,10 @@ export default (state = { isLoading: true }, action) => {
     case GET_PROFILE_INFO:
       return {
         user: {
-          ...action.payload
+          ...action.payload.user
         },
-        isLoading: false
+        isLoading: false,
+        isFollowed: action.payload.isFollowed
       };
     case UPDATE_PROFILE_IMG:
       return {

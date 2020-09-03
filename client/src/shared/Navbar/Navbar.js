@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, NavLink, Link } from 'react-router-dom';
 import { logout } from '../../actions/authActions';
 import classes from './Navbar.module.css';
@@ -7,6 +7,8 @@ import classes from './Navbar.module.css';
 const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const clientId = useSelector(state => state.auth.user);
 
   const onLogout = () => {
     dispatch(logout());
@@ -20,7 +22,7 @@ const Navbar = () => {
           IG
         </Link>
       </h3>
-      <NavLink className={classes.Navbar__Item} to="/profile">
+      <NavLink className={classes.Navbar__Item} to={`/profile/${clientId}`}>
         Profile
       </NavLink>
       <NavLink className={classes.Navbar__Item} to="/post">

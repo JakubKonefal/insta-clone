@@ -8,11 +8,12 @@ import {
   DELETE_PROFILE_IMG
 } from './types';
 
-export const getProfileInfo = token => dispatch => {
+export const getProfileInfo = (token, id) => dispatch => {
   axios
     .get('/profile', {
       headers: {
-        token
+        token,
+        id
       }
     })
     .then(res => dispatch({ type: GET_PROFILE_INFO, payload: res.data }))
@@ -83,5 +84,20 @@ export const deleteProfileImg = token => async dispatch => {
         type: GET_ERRORS,
         payload: err.response
       });
+    });
+};
+
+export const toggleUserFollow = (token, data) => async dispatch => {
+  axios
+    .post('/profile/follow', data, {
+      headers: {
+        token
+      }
+    })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
     });
 };

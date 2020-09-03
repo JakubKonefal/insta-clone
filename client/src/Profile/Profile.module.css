@@ -134,6 +134,12 @@
   margin-right: 10px;
 }
 
+.Profile__FollowBtn {
+  margin-top: 1em;
+  width: 12%;
+  font-weight: bold;
+}
+
 .Hidden {
   display: none;
 }

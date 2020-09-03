@@ -2,21 +2,23 @@ import React, { useEffect, useState } from 'react';
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import { Avatar, Button } from '@material-ui/core';
 import { Close, CloudUploadOutlined, DeleteOutline } from '@material-ui/icons';
+import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getProfileInfo,
   updateProfileImg,
-  deleteProfileImg
+  deleteProfileImg,
+  toggleUserFollow
 } from '../actions/profileActions';
 import Navbar from '../shared/Navbar/Navbar';
 import Spinner from '../shared/Spinner/Spinner';
 import classes from './Profile.module.css';
 import defaultUserPic from '../assets/default-user-pic.png';
 
-const Profile = () => {
+const Profile = ({ match }) => {
   useEffect(() => {
     fetchProfileInfo();
-  }, []);
+  }, [match.params.id]);
 
   const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
@@ -25,9 +27,11 @@ const Profile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewFile, setPreviewFile] = useState('');
   const profile = useSelector(state => state.profile);
+  const clientId = useSelector(state => state.auth.user);
 
   const fetchProfileInfo = () => {
-    dispatch(getProfileInfo(token));
+    const { id } = match.params;
+    dispatch(getProfileInfo(token, id));
   };
 
   const handleImageSelect = e => {
@@ -56,6 +60,16 @@ const Profile = () => {
     setPreviewFile('');
   };
 
+  const handleUserFollow = e => {
+    e.preventDefault();
+    const data = {
+      followingId: clientId,
+      followedId: match.params.id,
+      isFollowed: profile.isFollowed
+    };
+    dispatch(toggleUserFollow(token, data));
+  };
+
   return (
     <StylesProvider injectFirst>
       <section className={classes.Profile}>
@@ -74,7 +88,12 @@ const Profile = () => {
                       className={classes.Profile__UserAvatar}
                       src={profile.user.photo || defaultUserPic}
                       alt="profile pic"
-                      onClick={() => setAvatarMenuOpen(!avatarMenuOpen)}
+                      onClick={() => {
+                        const { id } = match.params;
+                        if (id === clientId) {
+                          setAvatarMenuOpen(!avatarMenuOpen);
+                        }
+                      }}
                     />
                     <Avatar
                       className={
@@ -160,6 +179,17 @@ const Profile = () => {
                   {`${profile.user.following.length} following`}
                 </span>
               </div>
+              {clientId !== match.params.id ? (
+                <Button
+                  className={classes.Profile__FollowBtn}
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={handleUserFollow}
+                >
+                  {profile.isFollowed ? 'Unfollow' : 'Follow'}
+                </Button>
+              ) : null}
             </div>
           </div>
         )}
@@ -168,4 +198,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withRouter(Profile);

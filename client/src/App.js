@@ -15,7 +15,7 @@ function App() {
       <Route path="/signup" component={SignUp} />
       <Route path="/" exact component={SignIn} />
       <ProtectedRoute path="/home" component={Home} />
-      <ProtectedRoute path="/profile" component={Profile} />
+      <ProtectedRoute path="/profile/:id" component={Profile} />
       <ProtectedRoute path="/post" component={Post} />
     </Provider>
   );
