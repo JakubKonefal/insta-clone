@@ -4,12 +4,21 @@ import { Favorite } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import StylesProvider from '@material-ui/styles/StylesProvider';
+import moment from 'moment';
 import { likePost, addComment } from '../actions/postActions';
 import classes from './SinglePost.module.css';
 import defaultUserPic from '../assets/default-user-pic.png';
 import CommentsList from './CommentsList';
 
-const SinglePost = ({ description, author, likes, comments, image, id }) => {
+const SinglePost = ({
+  description,
+  author,
+  likes,
+  comments,
+  image,
+  date,
+  id
+}) => {
   const dispatch = useDispatch();
 
   const [comment, setComment] = useState({
@@ -66,6 +75,9 @@ const SinglePost = ({ description, author, likes, comments, image, id }) => {
               onClick={() => dispatch(likePost(token, id))}
             />
             <span>{likes.length}</span>
+            <span className={classes.Post__Date}>
+              {moment(date).startOf('day').fromNow()}
+            </span>
           </div>
           <div className={classes.Post__Description}>
             <Link

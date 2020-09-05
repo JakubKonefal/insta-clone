@@ -19,6 +19,7 @@
     "no-use-before-define": "off",
     "react/jsx-no-duplicate-props": "off",
     "operator-linebreak": "warn",
-    "indent": "off"
+    "indent": "off",
+    "no-unused-expressions": "off"
   }
 }

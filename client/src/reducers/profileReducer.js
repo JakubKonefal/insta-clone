@@ -2,7 +2,8 @@ import {
   GET_PROFILE_INFO,
   UPDATE_PROFILE_IMG,
   PROFILE_IMG_LOADING,
-  DELETE_PROFILE_IMG
+  DELETE_PROFILE_IMG,
+  TOGGLE_USER_FOLLOW
 } from '../actions/types';
 
 export default (state = { isLoading: true }, action) => {
@@ -12,6 +13,7 @@ export default (state = { isLoading: true }, action) => {
         user: {
           ...action.payload.user
         },
+        userPosts: [...action.payload.userPosts],
         isLoading: false,
         isFollowed: action.payload.isFollowed
       };
@@ -35,6 +37,14 @@ export default (state = { isLoading: true }, action) => {
       return {
         ...state,
         isImgLoading: true
+      };
+    case TOGGLE_USER_FOLLOW:
+      return {
+        ...state,
+        user: {
+          ...action.payload.followed
+        },
+        isFollowed: !state.isFollowed
       };
     default:
       return state;

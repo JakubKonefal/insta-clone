@@ -3,19 +3,21 @@ import {
   ADD_POST_SUCCESS,
   GET_ALL_POSTS,
   LIKE_POST,
-  ADD_COMMENT
+  ADD_COMMENT,
+  GET_FOLLOWED_USERS_POSTS,
+  ALL_POSTS_LOADING
 } from '../actions/types';
 
 const initialState = {
   allPosts: [],
-  allPostsLoading: true,
+  allPostsLoading: false,
   createdPost: {
     isSending: false,
     success: false
   }
 };
 
-const replaceLikedPost = (allPosts, uid, postId) => {
+const updateLikedPost = (allPosts, uid, postId) => {
   const likedPost = allPosts.find(post => post._id === postId);
   const indexOfLikedPost = allPosts.findIndex(post => post._id === postId);
   const alreadyLiked = likedPost.likes.includes(uid);
@@ -64,10 +66,21 @@ const postReducer = (state = initialState, action) => {
         allPosts: action.payload,
         allPostsLoading: false
       };
+    case GET_FOLLOWED_USERS_POSTS:
+      return {
+        ...state,
+        allPosts: [...action.payload],
+        allPostsLoading: false
+      };
+    case ALL_POSTS_LOADING:
+      return {
+        ...state,
+        allPostsLoading: true
+      };
     case LIKE_POST:
       return {
         ...state,
-        allPosts: replaceLikedPost(
+        allPosts: updateLikedPost(
           state.allPosts,
           action.payload.uid,
           action.payload.postId
@@ -78,6 +91,7 @@ const postReducer = (state = initialState, action) => {
         ...state,
         allPosts: updatePostWithNewComment(state.allPosts, action.payload)
       };
+
     default:
       return state;
   }

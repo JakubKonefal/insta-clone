@@ -82,6 +82,13 @@
   color: red;
 }
 
+.Post__Date {
+  margin-left: auto;
+  color: #666;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
 .Post__Description {
   display: flex;
   align-items: center;

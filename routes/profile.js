@@ -1,5 +1,6 @@
 const express = require('express');
 const UserModel = require('../models/User');
+const PostModel = require('../models/Post');
 
 const router = express.Router();
 
@@ -7,10 +8,16 @@ router.get('/profile', async (req, res) => {
   const id = req.header('id');
   try {
     const userInfo = await UserModel.findById(id);
-    console.log(userInfo);
-    console.log(userInfo.followers.includes(req.user._id));
     const isFollowed = userInfo.followers.includes(req.user._id);
-    res.status(200).send({ user: userInfo, isFollowed });
+
+    const userPosts = await PostModel.find({
+      author: userInfo._id
+    });
+
+    console.log(userInfo._id);
+    console.log(userPosts);
+
+    res.status(200).send({ user: userInfo, userPosts, isFollowed });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -55,35 +62,62 @@ router.post('/profile/follow', async (req, res) => {
 
   console.log(followingId);
 
-  try {
-    const updatedProfile = isFollowed
-      ? await UserModel.findOneAndUpdate(
-          { _id: followedId },
-          {
-            $pull: {
-              followers: followingId
-            }
-          },
-          { new: true, useFindAndModify: false }
-        )
-      : await UserModel.findOneAndUpdate(
-          { _id: followedId },
-          {
-            $addToSet: {
-              followers: followingId
-            }
-          },
-          {
-            new: true,
-            useFindAndModify: false
+  if (isFollowed) {
+    try {
+      const followedUpdated = await UserModel.findOneAndUpdate(
+        { _id: followedId },
+        {
+          $pull: {
+            followers: followingId
           }
-        );
+        },
+        { new: true, useFindAndModify: false }
+      );
 
-    console.log(updatedProfile);
+      await UserModel.findOneAndUpdate(
+        { _id: followingId },
+        {
+          $pull: {
+            following: followedId
+          }
+        },
+        { new: true, useFindAndModify: false }
+      );
 
-    res.status(200).send(updatedProfile);
-  } catch (err) {
-    res.status(400).send(err);
+      res.status(200).send({
+        followed: followedUpdated
+      });
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  } else {
+    try {
+      const followedUpdated = await UserModel.findOneAndUpdate(
+        { _id: followedId },
+        {
+          $addToSet: {
+            followers: followingId
+          }
+        },
+        { new: true, useFindAndModify: false }
+      );
+
+      await UserModel.findOneAndUpdate(
+        { _id: followingId },
+        {
+          $addToSet: {
+            following: followedId
+          }
+        },
+        { new: true, useFindAndModify: false }
+      );
+
+      res.status(200).send({
+        followed: followedUpdated
+      });
+    } catch (err) {
+      res.status(400).send(err);
+    }
   }
 });
 

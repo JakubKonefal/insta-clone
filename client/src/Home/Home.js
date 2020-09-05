@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllPosts } from '../actions/postActions';
+import { Select } from '@material-ui/core';
+import StylesProvider from '@material-ui/styles/StylesProvider';
+import { getAllPosts, getFollowedUsersPosts } from '../actions/postActions';
 import Navbar from '../shared/Navbar/Navbar';
 import Spinner from '../shared/Spinner/Spinner';
 import PostsList from './PostsList';
@@ -11,19 +13,43 @@ const Home = () => {
     fetchInitialPosts();
   }, []);
 
+  const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
-  const { allPosts, allPostsLoading } = useSelector(state => state.posts);
+  const { allPosts } = useSelector(state => state.posts);
+  const [sortingType, setSortingType] = useState('all');
 
   const fetchInitialPosts = () => {
-    const token = localStorage.getItem('auth-token');
     dispatch(getAllPosts(token));
   };
 
+  const handlePostsSort = ({ target: { value } }) => {
+    setSortingType(value);
+    value === 'all'
+      ? dispatch(getAllPosts(token))
+      : dispatch(getFollowedUsersPosts(token));
+  };
   return (
-    <div className={classes.Home}>
-      <Navbar />
-      {allPostsLoading ? <Spinner /> : <PostsList posts={allPosts} />}
-    </div>
+    <StylesProvider injectFirst>
+      <div className={classes.Home}>
+        <Navbar />
+        <div className={classes.Home__SelectWraper}>
+          <Select
+            className={classes.Home__Select}
+            value={sortingType}
+            onChange={handlePostsSort}
+            variant="outlined"
+          >
+            <option className={classes.Home__SelectOption} value="all">
+              All posts
+            </option>
+            <option className={classes.Home__SelectOption} value="followed">
+              Followed users posts
+            </option>
+          </Select>
+        </div>
+        {!allPosts ? <Spinner /> : <PostsList posts={allPosts} />}
+      </div>
+    </StylesProvider>
   );
 };
 

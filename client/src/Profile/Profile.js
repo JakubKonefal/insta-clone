@@ -14,6 +14,7 @@ import Navbar from '../shared/Navbar/Navbar';
 import Spinner from '../shared/Spinner/Spinner';
 import classes from './Profile.module.css';
 import defaultUserPic from '../assets/default-user-pic.png';
+import PostThumbnail from './PostThumbnail';
 
 const Profile = ({ match }) => {
   useEffect(() => {
@@ -77,121 +78,132 @@ const Profile = ({ match }) => {
         {profile.isLoading ? (
           <Spinner />
         ) : (
-          <div className={classes.Profile__Card}>
-            <div className={classes.Profile__UserInfo}>
-              <div className={classes.Profile__Avatar}>
-                {profile.isImgLoading ? (
-                  <Spinner />
-                ) : (
-                  <>
-                    <Avatar
-                      className={classes.Profile__UserAvatar}
-                      src={profile.user.photo || defaultUserPic}
-                      alt="profile pic"
-                      onClick={() => {
-                        const { id } = match.params;
-                        if (id === clientId) {
-                          setAvatarMenuOpen(!avatarMenuOpen);
+          <>
+            <div className={classes.Profile__Card}>
+              <div className={classes.Profile__UserInfo}>
+                <div className={classes.Profile__Avatar}>
+                  {profile.isImgLoading ? (
+                    <Spinner />
+                  ) : (
+                    <>
+                      <Avatar
+                        className={classes.Profile__UserAvatar}
+                        src={profile.user.photo || defaultUserPic}
+                        alt="profile pic"
+                        onClick={() => {
+                          const { id } = match.params;
+                          if (id === clientId) {
+                            setAvatarMenuOpen(!avatarMenuOpen);
+                          }
+                        }}
+                      />
+                      <Avatar
+                        className={
+                          previewFile
+                            ? classes.Profile__AvatarPreview
+                            : classes.Hidden
                         }
-                      }}
-                    />
-                    <Avatar
-                      className={
-                        previewFile
-                          ? classes.Profile__AvatarPreview
-                          : classes.Hidden
-                      }
-                      src={previewFile}
-                      alt="preview"
-                    />
-                    <Close
-                      className={
-                        previewFile
-                          ? classes.Profile__AvatarPreviewClose
-                          : classes.Hidden
-                      }
-                      onClick={() => clearSelectedImage()}
-                    />
-                    <Button
-                      className={
-                        previewFile
-                          ? classes.Profile__AvatarAcceptBtn
-                          : classes.Hidden
-                      }
-                      onClick={() => handleImageSubmit()}
-                      variant="contained"
-                      color="primary"
-                    >
-                      add/update
-                    </Button>
-                    <div
-                      className={
-                        avatarMenuOpen
-                          ? classes.Profile__AvatarMenu
-                          : classes.Hidden
-                      }
-                    >
-                      <label
-                        className={`${classes.Profile__AvatarAction} ${classes.Profile__AvatarActions_Add}`}
-                        htmlFor="avatar"
+                        src={previewFile}
+                        alt="preview"
+                      />
+                      <Close
+                        className={
+                          previewFile
+                            ? classes.Profile__AvatarPreviewClose
+                            : classes.Hidden
+                        }
+                        onClick={() => clearSelectedImage()}
+                      />
+                      <Button
+                        className={
+                          previewFile
+                            ? classes.Profile__AvatarAcceptBtn
+                            : classes.Hidden
+                        }
+                        onClick={() => handleImageSubmit()}
+                        variant="contained"
+                        color="primary"
                       >
-                        <CloudUploadOutlined
-                          className={classes.Profile__AvatarMenuIcon}
-                        />
-                        Add / update profile picture
-                        <input
-                          type="file"
-                          id="avatar"
-                          key={selectedImage}
-                          name="avatar"
-                          onChange={handleImageSelect}
-                        />
-                      </label>
-                      <button
-                        type="button"
-                        className={`${classes.Profile__AvatarAction} ${classes.Profile__AvatarActions_Delete}`}
-                        onClick={() => handleImageDelete()}
+                        add/update
+                      </Button>
+                      <div
+                        className={
+                          avatarMenuOpen
+                            ? classes.Profile__AvatarMenu
+                            : classes.Hidden
+                        }
                       >
-                        <DeleteOutline
-                          className={classes.Profile__AvatarMenuIcon}
-                        />
-                        Delete profile picture
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
+                        <label
+                          className={`${classes.Profile__AvatarAction} ${classes.Profile__AvatarActions_Add}`}
+                          htmlFor="avatar"
+                        >
+                          <CloudUploadOutlined
+                            className={classes.Profile__AvatarMenuIcon}
+                          />
+                          Add / update profile picture
+                          <input
+                            type="file"
+                            id="avatar"
+                            key={selectedImage}
+                            name="avatar"
+                            onChange={handleImageSelect}
+                          />
+                        </label>
+                        <button
+                          type="button"
+                          className={`${classes.Profile__AvatarAction} ${classes.Profile__AvatarActions_Delete}`}
+                          onClick={() => handleImageDelete()}
+                        >
+                          <DeleteOutline
+                            className={classes.Profile__AvatarMenuIcon}
+                          />
+                          Delete profile picture
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
 
-              <h3 className={classes.Profile__Name}>
-                {`${profile.user.firstName}  ${profile.user.lastName}`}
-              </h3>
-              <h4 className={classes.Profile__UserEmail}>
-                {`${profile.user.email}`}
-              </h4>
-              <div className={classes.Profile__UserStats}>
-                <span className={classes.Profile__StatItem}>
-                  {`${profile.user.posts.length} posts`}
-                </span>
-                <span className={classes.Profile__StatItem}>
-                  {`${profile.user.followers.length} followers`}
-                </span>
-                <span className={classes.Profile__StatItem}>
-                  {`${profile.user.following.length} following`}
-                </span>
+                <h3 className={classes.Profile__Name}>
+                  {`${profile.user.firstName}  ${profile.user.lastName}`}
+                </h3>
+                <h4 className={classes.Profile__UserEmail}>
+                  {`${profile.user.email}`}
+                </h4>
+                <div className={classes.Profile__UserStats}>
+                  <span className={classes.Profile__StatItem}>
+                    {`${profile.userPosts.length} posts`}
+                  </span>
+                  <span className={classes.Profile__StatItem}>
+                    {`${profile.user.followers.length} followers`}
+                  </span>
+                  <span className={classes.Profile__StatItem}>
+                    {`${profile.user.following.length} following`}
+                  </span>
+                </div>
+                {clientId !== match.params.id ? (
+                  <Button
+                    className={classes.Profile__FollowBtn}
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={handleUserFollow}
+                  >
+                    {profile.isFollowed ? 'Unfollow' : 'Follow'}
+                  </Button>
+                ) : null}
               </div>
-              {clientId !== match.params.id ? (
-                <Button
-                  className={classes.Profile__FollowBtn}
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  onClick={handleUserFollow}
-                >
-                  {profile.isFollowed ? 'Unfollow' : 'Follow'}
-                </Button>
-              ) : null}
             </div>
-          </div>
+            <div className={classes.Profile__Posts}>
+              {profile.userPosts.map(post => (
+                <PostThumbnail
+                  key={post._id}
+                  image={post.image}
+                  date={post.date}
+                />
+              ))}
+            </div>
+          </>
         )}
       </section>
     </StylesProvider>

@@ -6,3 +6,26 @@
   padding-top: 30px;
   background-color: #f0f2f5;
 }
+
+.Home__SelectWraper {
+  display: flex;
+  align-items: center;
+  width: 33%;
+  margin-bottom: 2em;
+}
+
+.Home__Select {
+  width: 100%;
+  background-color: #fff;
+  font-size: 1.6rem;
+}
+
+.Home__SelectOption {
+  padding: 1em;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.Home__SelectOption:hover {
+  background-color: #eee;
+}

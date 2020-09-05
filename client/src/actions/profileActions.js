@@ -5,7 +5,8 @@ import {
   UPDATE_PROFILE_IMG,
   GET_ERRORS,
   PROFILE_IMG_LOADING,
-  DELETE_PROFILE_IMG
+  DELETE_PROFILE_IMG,
+  TOGGLE_USER_FOLLOW
 } from './types';
 
 export const getProfileInfo = (token, id) => dispatch => {
@@ -95,9 +96,9 @@ export const toggleUserFollow = (token, data) => async dispatch => {
       }
     })
     .then(res => {
-      console.log(res);
+      dispatch({ type: TOGGLE_USER_FOLLOW, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
+      dispatch({ type: GET_ERRORS, payload: err.response });
     });
 };

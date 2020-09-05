@@ -13,6 +13,7 @@ export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 
 export const ALL_POSTS_LOADING = 'GET_ALL_POSTS';
 export const GET_ALL_POSTS = 'GET_ALL_POSTS';
+export const GET_FOLLOWED_USERS_POSTS = 'GET_FOLLOWED_USERS_POSTS';
 
 export const LIKE_POST = 'LIKE_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';

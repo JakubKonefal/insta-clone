@@ -1,9 +1,7 @@
 import React from 'react';
-import { Collapse } from '@material-ui/core';
 import classes from './SingleComment.module.css';
 
-const SingleComment = ({ id, author, content }) => {
-  console.log(author);
+const SingleComment = ({ author, content }) => {
   return (
     <div className={classes.Comment}>
       <span
