@@ -1,5 +1,6 @@
 .Post {
   width: 33%;
+  min-width: 340px;
   margin-bottom: 5em;
   border-radius: 15px;
 }
@@ -143,4 +144,60 @@ span[data-placeholder]:not(:focus):not([data-div-placeholder-content]):before {
   align-self: flex-end;
   margin-top: 7px;
   font-weight: bold;
+}
+
+@media (max-width: 1440px) {
+  .Post {
+    width: 40%;
+  }
+}
+
+@media (max-width: 1280px) {
+  .Post {
+    width: 45%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .Post {
+    width: 50%;
+  }
+}
+
+@media (max-width: 896px) and (orientation: landscape) {
+  .Post__Avatar {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 667px) and (orientation: landscape) {
+  .Post {
+    width: 70%;
+  }
+}
+
+@media (max-width: 800px) and (orientation: portrait) {
+  .Post {
+    width: 70%;
+  }
+}
+
+@media (max-width: 601px) and (orientation: portrait) {
+  .Post__Avatar {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 414px) and (orientation: portrait) {
+  .Post {
+    width: 95%;
+  }
+}
+
+@media (max-width: 320px) and (orientation: portrait) {
+  .Post {
+    min-width: 300px;
+  }
 }

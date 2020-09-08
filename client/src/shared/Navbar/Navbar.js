@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, NavLink, Link } from 'react-router-dom';
+import { Menu } from '@material-ui/icons';
 import { logout } from '../../actions/authActions';
+import SideDrawer from './SideDrawer';
 import classes from './Navbar.module.css';
 
 const Navbar = () => {
@@ -9,6 +11,7 @@ const Navbar = () => {
   const history = useHistory();
 
   const clientId = useSelector(state => state.auth.user);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const onLogout = () => {
     dispatch(logout());
@@ -35,6 +38,16 @@ const Navbar = () => {
       >
         Logout
       </button>
+
+      <Menu
+        className={classes.Navbar__MenuIcon}
+        onClick={() => setMenuOpen(!menuOpen)}
+      />
+      <SideDrawer
+        open={menuOpen}
+        clientId={clientId}
+        toggleMenu={setMenuOpen}
+      />
     </nav>
   );
 };

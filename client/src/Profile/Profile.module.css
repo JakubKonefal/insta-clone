@@ -7,6 +7,7 @@
 
 .Profile__Card {
   width: 40%;
+  min-width: 500px;
   margin-top: 50px;
   padding: 4em;
   border-bottom: 1px solid black;
@@ -48,11 +49,11 @@
 .Profile__AvatarMenu {
   position: absolute;
   top: 50%;
-  right: -100%;
+  left: -100%;
   display: flex;
   flex-direction: column;
   width: 200%;
-  transform: translate(70%, -50%);
+  transform: translate(-70%, -50%);
   background-color: #fff;
   border-radius: 3px;
   padding: 0.5em;
@@ -158,4 +159,160 @@
 
 input[type='file'] {
   display: none;
+}
+
+@media (max-width: 1600px) {
+  .Profile__Card {
+    width: 45%;
+  }
+
+  .Profile__Posts {
+    width: 45%;
+  }
+}
+
+@media (max-width: 1440px) {
+  .Profile__Card {
+    width: 50%;
+  }
+
+  .Profile__Posts {
+    width: 50%;
+  }
+}
+
+@media (max-width: 1280px) {
+  .Profile__Card {
+    width: 55%;
+  }
+
+  .Profile__Posts {
+    width: 55%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .Profile__Card {
+    width: 60%;
+  }
+
+  .Profile__Posts {
+    width: 60%;
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  .Profile__Posts {
+    width: 65%;
+  }
+}
+
+@media (max-width: 812px) and (orientation: landscape) {
+  .Profile__Card {
+    width: 70%;
+  }
+
+  .Profile__Posts {
+    width: 80%;
+  }
+
+  .Profile__Avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .Profile__Name {
+    font-size: 2.7rem;
+  }
+
+  .Profile__UserEmail {
+    font-size: 2.2rem;
+  }
+
+  .Profile__UserStats {
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 800px) and (orientation: portrait) {
+  .Profile__Card {
+    width: 70%;
+  }
+
+  .Profile__Posts {
+    width: 80%;
+  }
+}
+
+@media (max-width: 800px) and (orientation: portrait) {
+  .Profile__Card {
+    width: 70%;
+    margin-top: 20px;
+  }
+
+  .Profile__Posts {
+    width: 90%;
+  }
+
+  .Profile__Avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .Profile__Name {
+    font-size: 2.7rem;
+  }
+
+  .Profile__UserEmail {
+    font-size: 2.2rem;
+  }
+
+  .Profile__UserStats {
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 601px) and (orientation: portrait) {
+  .Profile__Card {
+    min-width: 450px;
+  }
+}
+
+@media (max-width: 414px) and (orientation: portrait) {
+  .Profile__Card {
+    min-width: 100%;
+  }
+
+  .Profile__Avatar {
+    position: unset;
+    width: 75px;
+    height: 75px;
+  }
+
+  .Profile__UserInfo {
+    padding: 1em 2em;
+  }
+
+  .Profile__Name {
+    width: 100%;
+    margin: 0;
+    font-size: 2.2rem;
+  }
+
+  .Profile__UserEmail {
+    width: 100%;
+    font-size: 1.7rem;
+  }
+
+  .Profile__UserStats {
+    width: 100%;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 320px) and (orientation: portrait) {
+  .Profile__Avatar {
+    width: 65px;
+    height: 65px;
+  }
 }

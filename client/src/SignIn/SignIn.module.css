@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   width: 20%;
+  min-width: 340px;
   height: 50%;
 }
 
@@ -18,6 +19,7 @@
   justify-content: center;
   align-items: center;
   height: 80%;
+  min-height: 320px;
   border: 1px solid #ddd;
   box-sizing: content-box;
   padding: 2em;
@@ -52,7 +54,7 @@
 }
 
 .SignIn__Card_2 {
-  margin-top: 20px;
+  margin: 40px 0;
   border: 1px solid #ddd;
   box-sizing: content-box;
   padding: 2em;
@@ -75,4 +77,50 @@
 
 .SignIn__Card_2__Link:hover {
   color: #525faf;
+}
+
+@media (max-width: 962px) and (orientation: landscape) {
+  .SignIn {
+    width: 40%;
+    min-width: 340px;
+  }
+}
+
+@media (max-width: 800px) and (orientation: portrait) {
+  .SignIn {
+    width: 60%;
+    min-width: 0;
+  }
+
+  .SignIn__Card {
+    min-height: 425px;
+  }
+
+  .SignIn__Form {
+    flex-grow: 1;
+  }
+}
+
+@media (max-width: 414px) and (orientation: portrait) {
+  .SignIn {
+    width: 80%;
+  }
+
+  .SignIn__InstaLabel {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 360px) and (orientation: portrait) {
+  .SignIn__Input {
+    width: 90%;
+  }
+
+  .SignIn__Button {
+    width: 90%;
+  }
+
+  .SignIn__Card_2 {
+    padding: 1em;
+  }
 }

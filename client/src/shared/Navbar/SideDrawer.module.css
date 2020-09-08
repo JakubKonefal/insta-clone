@@ -1,0 +1,87 @@
+.SideDrawer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f2f5;
+  transition: 0.4s;
+  font-size: 2.5rem;
+}
+
+.SideDrawer__Hidden {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f2f5;
+  transition: 0.4s;
+}
+
+.SideDrawer__Title {
+  margin: 1.25em 0;
+}
+
+.SideDrawer__Title:hover {
+  font-size: 3.1rem;
+}
+
+.SideDrawer__Item {
+  margin: 1.25em 0;
+}
+
+.SideDrawer__Item:hover {
+  text-decoration: underline;
+}
+
+.SideDrawer__Button {
+  margin: 1.25em 0;
+  border: none;
+  color: rgb(241, 47, 47);
+  font-size: 2.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.SideDrawer__Button:hover {
+  font-size: 2.4rem;
+}
+
+.SideDrawer__CloseIcon {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.SideDrawer__CloseIcon:hover {
+  transform: scale(1.15);
+}
+
+@media (max-width: 780px) and (orientation: landscape) {
+  .SideDrawer {
+    font-size: 2.3rem;
+  }
+
+  .SideDrawer__Title {
+    margin: 0.85em 0;
+  }
+
+  .SideDrawer__Item {
+    margin: 0.85em 0;
+  }
+
+  .SideDrawer__Button {
+    margin: 0.85em 0;
+  }
+}

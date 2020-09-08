@@ -31,6 +31,7 @@
   margin-bottom: 1em;
   font-weight: bold;
   font-size: 1.2rem;
+  text-align: center;
 }
 
 .Thumbnail__DeleteBtn {
@@ -44,4 +45,10 @@
 
 .Hidden {
   display: none;
+}
+
+@media (max-width: 800px) and (orientation: portrait) {
+  .Thumbnail {
+    margin: 0 2em;
+  }
 }
