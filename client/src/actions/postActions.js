@@ -2,7 +2,9 @@ import axios from 'axios';
 import uniqid from 'uniqid';
 import {
   ADD_POST,
+  DELETE_POST,
   ADD_POST_SUCCESS,
+  DELETE_POST_SUCCESS,
   GET_ERRORS,
   CLEAR_ERRORS,
   ALL_POSTS_LOADING,
@@ -123,7 +125,6 @@ export const addComment = (token, comment) => async dispatch => {
       }
     )
     .then(res => {
-      console.log(res.data);
       dispatch({ type: ADD_COMMENT, payload: res.data });
     })
     .catch(err => {

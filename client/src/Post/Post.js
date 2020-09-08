@@ -14,7 +14,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import Spinner from '../shared/Spinner/Spinner';
-import { getProfileInfo } from '../actions/profileActions';
+import { getUserPhoto } from '../actions/profileActions';
 import { addPost } from '../actions/postActions';
 import classes from './Post.module.css';
 import Navbar from '../shared/Navbar/Navbar';
@@ -31,19 +31,19 @@ const Post = () => {
   const [postDescription, setPostDescription] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewFile, setPreviewFile] = useState('');
-  const profile = useSelector(state => state.profile);
+  const { user } = useSelector(state => state.auth);
+  const { isLoading, photo } = useSelector(state => state.profile);
   const { isSending, success } = useSelector(state => state.posts.createdPost);
 
   const fetchProfileInfo = () => {
-    dispatch(getProfileInfo(token));
+    dispatch(getUserPhoto(token));
   };
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    const { _id } = profile.user;
     const post = {
       description: postDescription,
-      author: _id
+      author: user
     };
     dispatch(addPost(post, selectedImage, token));
     clearSelectedImage();
@@ -72,14 +72,14 @@ const Post = () => {
     <StylesProvider injectFirst>
       <div className={classes.Post}>
         <Navbar />
-        {profile.isLoading ? (
+        {isLoading ? (
           <Spinner />
         ) : (
           <form className={classes.Post__Form} onSubmit={handleFormSubmit}>
             <div className={classes.Post__Header}>
               <Avatar
                 className={classes.Post__HeaderAvatar}
-                src={profile.user.photo || defaultUserPic}
+                src={photo || defaultUserPic}
                 alt="profile-pic"
               />
               <h3 className={classes.Post__HeaderTitle}>Create a Post</h3>

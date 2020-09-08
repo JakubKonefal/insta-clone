@@ -76,7 +76,7 @@ const SinglePost = ({
             />
             <span>{likes.length}</span>
             <span className={classes.Post__Date}>
-              {moment(date).startOf('day').fromNow()}
+              {moment(date).startOf('minute').fromNow()}
             </span>
           </div>
           <div className={classes.Post__Description}>

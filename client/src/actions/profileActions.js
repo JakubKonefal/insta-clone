@@ -2,14 +2,19 @@ import axios from 'axios';
 import { storage } from '../config/firebase';
 import {
   GET_PROFILE_INFO,
+  GET_USER_PHOTO,
   UPDATE_PROFILE_IMG,
   GET_ERRORS,
   PROFILE_IMG_LOADING,
   DELETE_PROFILE_IMG,
-  TOGGLE_USER_FOLLOW
+  DELETE_POST,
+  DELETE_POST_SUCCESS,
+  TOGGLE_USER_FOLLOW,
+  PROFILE_LOADING
 } from './types';
 
 export const getProfileInfo = (token, id) => dispatch => {
+  dispatch({ type: PROFILE_LOADING });
   axios
     .get('/profile', {
       headers: {
@@ -17,12 +22,26 @@ export const getProfileInfo = (token, id) => dispatch => {
         id
       }
     })
-    .then(res => dispatch({ type: GET_PROFILE_INFO, payload: res.data }))
+    .then(res => {
+      console.log(res);
+      dispatch({ type: GET_PROFILE_INFO, payload: res.data });
+    })
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response
       });
+    });
+};
+
+export const getUserPhoto = token => dispatch => {
+  axios
+    .get('/user/photo', { headers: { token } })
+    .then(res => {
+      dispatch({ type: GET_USER_PHOTO, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response });
     });
 };
 
@@ -97,6 +116,18 @@ export const toggleUserFollow = (token, data) => async dispatch => {
     })
     .then(res => {
       dispatch({ type: TOGGLE_USER_FOLLOW, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response });
+    });
+};
+
+export const deletePost = (token, postId) => dispatch => {
+  dispatch({ type: DELETE_POST });
+  axios
+    .delete('/profile/post', { headers: { token, postId } })
+    .then(res => {
+      dispatch({ type: DELETE_POST_SUCCESS, payload: res.data });
     })
     .catch(err => {
       dispatch({ type: GET_ERRORS, payload: err.response });

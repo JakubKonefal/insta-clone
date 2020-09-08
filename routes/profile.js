@@ -1,8 +1,21 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const UserModel = require('../models/User');
 const PostModel = require('../models/Post');
 
 const router = express.Router();
+
+router.get('/user/photo', async (req, res) => {
+  const token = req.header('token');
+  const { _id } = jwt.decode(token);
+
+  try {
+    const { photo } = await UserModel.findById(_id);
+    res.status(200).send(photo);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 
 router.get('/profile', async (req, res) => {
   const id = req.header('id');
@@ -13,9 +26,6 @@ router.get('/profile', async (req, res) => {
     const userPosts = await PostModel.find({
       author: userInfo._id
     });
-
-    console.log(userInfo._id);
-    console.log(userPosts);
 
     res.status(200).send({ user: userInfo, userPosts, isFollowed });
   } catch (err) {
@@ -118,6 +128,17 @@ router.post('/profile/follow', async (req, res) => {
     } catch (err) {
       res.status(400).send(err);
     }
+  }
+});
+
+router.delete('/profile/post', async (req, res) => {
+  const postId = req.header('postId');
+
+  try {
+    await PostModel.findOneAndDelete({ _id: postId });
+    res.status(200).send(postId);
+  } catch (err) {
+    res.status(400).send(err);
   }
 });
 

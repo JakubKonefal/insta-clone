@@ -75,7 +75,7 @@ const Profile = ({ match }) => {
     <StylesProvider injectFirst>
       <section className={classes.Profile}>
         <Navbar />
-        {profile.isLoading ? (
+        {profile.isLoading || !profile.user ? (
           <Spinner />
         ) : (
           <>
@@ -198,8 +198,10 @@ const Profile = ({ match }) => {
               {profile.userPosts.map(post => (
                 <PostThumbnail
                   key={post._id}
+                  id={post._id}
                   image={post.image}
                   date={post.date}
+                  ownPost={clientId === match.params.id}
                 />
               ))}
             </div>
