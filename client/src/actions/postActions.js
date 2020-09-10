@@ -2,8 +2,8 @@ import axios from 'axios';
 import uniqid from 'uniqid';
 import {
   ADD_POST,
-  DELETE_POST,
   ADD_POST_SUCCESS,
+  DELETE_POST,
   DELETE_POST_SUCCESS,
   GET_ERRORS,
   CLEAR_ERRORS,
@@ -11,9 +11,38 @@ import {
   GET_ALL_POSTS,
   LIKE_POST,
   ADD_COMMENT,
+  DELETE_COMMENT,
   GET_FOLLOWED_USERS_POSTS
 } from './types';
 import { storage } from '../config/firebase';
+
+export const getAllPosts = token => dispatch => {
+  dispatch({ type: ALL_POSTS_LOADING });
+  axios
+    .get('/posts', {
+      headers: {
+        token
+      }
+    })
+    .then(res => {
+      dispatch({ type: GET_ALL_POSTS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response });
+    });
+};
+
+export const getFollowedUsersPosts = token => dispatch => {
+  dispatch({ type: ALL_POSTS_LOADING });
+  axios
+    .get('/posts/followed', { headers: { token } })
+    .then(res => {
+      dispatch({ type: GET_FOLLOWED_USERS_POSTS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response });
+    });
+};
 
 export const addPost = (post, image, token) => async dispatch => {
   dispatch({ type: ADD_POST });
@@ -66,57 +95,22 @@ export const addPost = (post, image, token) => async dispatch => {
     });
 };
 
-export const getAllPosts = token => async dispatch => {
-  dispatch({ type: ALL_POSTS_LOADING });
+export const deletePost = (token, postId) => dispatch => {
+  dispatch({ type: DELETE_POST });
   axios
-    .get('/home', {
-      headers: {
-        token
-      }
-    })
+    .delete('/post', { headers: { token, postId } })
     .then(res => {
-      dispatch({ type: GET_ALL_POSTS, payload: res.data });
+      dispatch({ type: DELETE_POST_SUCCESS, payload: res.data });
     })
     .catch(err => {
       dispatch({ type: GET_ERRORS, payload: err.response });
     });
 };
 
-export const getFollowedUsersPosts = token => async dispatch => {
-  dispatch({ type: ALL_POSTS_LOADING });
-  axios
-    .get('/home/followed', { headers: { token } })
-    .then(res => {
-      dispatch({ type: GET_FOLLOWED_USERS_POSTS, payload: res.data });
-    })
-    .catch(err => {
-      dispatch({ type: GET_ERRORS, payload: err.response });
-    });
-};
-
-export const likePost = (token, postId) => dispatch => {
+export const addComment = (token, comment) => dispatch => {
   axios
     .post(
-      '/home/like',
-      { postId },
-      {
-        headers: {
-          token
-        }
-      }
-    )
-    .then(res => {
-      dispatch({ type: LIKE_POST, payload: { uid: res.data, postId } });
-    })
-    .catch(err => {
-      dispatch({ type: GET_ERRORS, payload: err.response });
-    });
-};
-
-export const addComment = (token, comment) => async dispatch => {
-  axios
-    .post(
-      '/home/comment',
+      '/post/comment',
       { comment },
       {
         headers: {
@@ -126,6 +120,38 @@ export const addComment = (token, comment) => async dispatch => {
     )
     .then(res => {
       dispatch({ type: ADD_COMMENT, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response });
+    });
+};
+
+export const deleteComment = (token, commentId, postId) => dispatch => {
+  axios
+    .delete('/post/comment', { headers: { token, commentId, postId } })
+    .then(res => {
+      const { postId, commentId } = res.data;
+
+      dispatch({ type: DELETE_COMMENT, payload: { postId, commentId } });
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response });
+    });
+};
+
+export const likePost = (token, postId) => dispatch => {
+  axios
+    .post(
+      '/post/like',
+      { postId },
+      {
+        headers: {
+          token
+        }
+      }
+    )
+    .then(res => {
+      dispatch({ type: LIKE_POST, payload: { uid: res.data, postId } });
     })
     .catch(err => {
       dispatch({ type: GET_ERRORS, payload: err.response });

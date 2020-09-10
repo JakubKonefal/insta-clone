@@ -20,6 +20,8 @@
     "react/jsx-no-duplicate-props": "off",
     "operator-linebreak": "warn",
     "indent": "off",
-    "no-unused-expressions": "off"
+    "no-unused-expressions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off"
   }
 }

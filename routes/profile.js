@@ -5,7 +5,7 @@ const PostModel = require('../models/Post');
 
 const router = express.Router();
 
-router.get('/user/photo', async (req, res) => {
+router.get('/profile/photo', async (req, res) => {
   const token = req.header('token');
   const { _id } = jwt.decode(token);
 
@@ -33,7 +33,7 @@ router.get('/profile', async (req, res) => {
   }
 });
 
-router.post('/profile', async (req, res) => {
+router.post('/profile/photo', async (req, res) => {
   if (req.body.verifyToken) {
     return res.status(200).send(req.user);
   }
@@ -52,7 +52,7 @@ router.post('/profile', async (req, res) => {
   }
 });
 
-router.delete('/profile', async (req, res) => {
+router.delete('/profile/photo', async (req, res) => {
   const { _id } = req.user;
 
   try {
@@ -69,8 +69,6 @@ router.delete('/profile', async (req, res) => {
 
 router.post('/profile/follow', async (req, res) => {
   const { followingId, followedId, isFollowed } = req.body;
-
-  console.log(followingId);
 
   if (isFollowed) {
     try {
@@ -128,17 +126,6 @@ router.post('/profile/follow', async (req, res) => {
     } catch (err) {
       res.status(400).send(err);
     }
-  }
-});
-
-router.delete('/profile/post', async (req, res) => {
-  const postId = req.header('postId');
-
-  try {
-    await PostModel.findOneAndDelete({ _id: postId });
-    res.status(200).send(postId);
-  } catch (err) {
-    res.status(400).send(err);
   }
 });
 

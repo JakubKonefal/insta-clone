@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DeleteOutline } from '@material-ui/icons';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { deletePost } from '../actions/profileActions';
+import { deletePost } from '../actions/postActions';
 import classes from './PostThumbnail.module.css';
 
 const PostThumbnail = ({ id, image, date, ownPost }) => {

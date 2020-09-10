@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, NavLink, Link } from 'react-router-dom';
 import { Menu } from '@material-ui/icons';
+import StylesProvider from '@material-ui/styles/StylesProvider';
 import { logout } from '../../actions/authActions';
 import SideDrawer from './SideDrawer';
 import classes from './Navbar.module.css';
@@ -38,11 +39,13 @@ const Navbar = () => {
       >
         Logout
       </button>
+      <StylesProvider injectFirst>
+        <Menu
+          className={classes.Navbar__MenuIcon}
+          onClick={() => setMenuOpen(!menuOpen)}
+        />
+      </StylesProvider>
 
-      <Menu
-        className={classes.Navbar__MenuIcon}
-        onClick={() => setMenuOpen(!menuOpen)}
-      />
       <SideDrawer
         open={menuOpen}
         clientId={clientId}

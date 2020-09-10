@@ -1,10 +1,12 @@
+@import url('../config/main-colors.css');
+
 .Home {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 80px;
   padding-top: 30px;
-  background-color: #f0f2f5;
+  background-color: var(--background);
 }
 
 .Home__SelectWraper {
@@ -17,7 +19,7 @@
 
 .Home__Select {
   width: 100%;
-  background-color: #fff;
+  background-color: var(--main);
   font-size: 1.6rem;
 }
 

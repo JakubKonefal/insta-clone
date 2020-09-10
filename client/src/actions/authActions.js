@@ -25,7 +25,7 @@ export const register = newUser => dispatch => {
 
 export const login = credentials => dispatch => {
   axios
-    .post('/', credentials)
+    .post('/signin', credentials)
     .then(res => {
       dispatch({
         type: LOGIN_SUCCESS,

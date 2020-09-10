@@ -22,10 +22,10 @@ const SinglePost = ({
   const dispatch = useDispatch();
 
   const [comment, setComment] = useState({
-    author: '',
-    content: '',
-    postId: ''
+    content: ''
   });
+  const [refreshKey, setRefreshKey] = useState(false);
+
   const [showInput, setShowInput] = useState(false);
   const token = localStorage.getItem('auth-token');
   const clientId = useSelector(state => state.auth.user);
@@ -34,15 +34,22 @@ const SinglePost = ({
 
   const handleInputChange = e => {
     setComment({
-      author: clientId,
-      content: e.target.innerText,
-      postId: id
+      content: e.target.innerText
     });
   };
 
   const handleCommentSubmit = e => {
     e.preventDefault();
-    dispatch(addComment(token, comment));
+    const newComment = {
+      author: clientId,
+      content: comment.content,
+      postId: id
+    };
+
+    setComment({ content: '' });
+    setRefreshKey(!refreshKey);
+
+    dispatch(addComment(token, newComment));
   };
 
   return (
@@ -98,6 +105,7 @@ const SinglePost = ({
           <Collapse className={classes.Post__Comments} in={showInput}>
             <form
               className={classes.Post__CommentForm}
+              key={refreshKey}
               onSubmit={handleCommentSubmit}
             >
               <span
@@ -116,7 +124,7 @@ const SinglePost = ({
                 Post
               </Button>
             </form>
-            <CommentsList comments={comments} />
+            <CommentsList comments={comments} postId={id} />
           </Collapse>
         </CardContent>
       </Card>

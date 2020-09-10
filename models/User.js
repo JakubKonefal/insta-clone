@@ -31,10 +31,6 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now()
   },
-  posts: {
-    type: Array,
-    default: []
-  },
   followers: {
     type: Array,
     default: []

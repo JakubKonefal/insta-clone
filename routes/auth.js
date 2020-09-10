@@ -6,7 +6,7 @@ const { validateSignUp, validateSignIn } = require('../validation/validation');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/signin', async (req, res) => {
   const { email, password } = req.body;
   const { error } = validateSignIn(req.body);
   if (error) return res.status(400).send(error.details[0].message);

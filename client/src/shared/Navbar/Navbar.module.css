@@ -1,3 +1,5 @@
+@import url('../../config/main-colors.css');
+
 .Navbar {
   display: flex;
   align-items: center;
@@ -9,7 +11,7 @@
   padding: 1em 5em;
   box-sizing: border-box;
   box-shadow: 0 4px 2px -2px gray;
-  background-color: #fff;
+  background-color: var(--main);
   z-index: 100;
 }
 

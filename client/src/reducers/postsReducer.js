@@ -4,6 +4,7 @@ import {
   GET_ALL_POSTS,
   LIKE_POST,
   ADD_COMMENT,
+  DELETE_COMMENT,
   GET_FOLLOWED_USERS_POSTS,
   ALL_POSTS_LOADING
 } from '../actions/types';
@@ -40,6 +41,20 @@ const updatePostWithNewComment = (allPosts, updatedPost) => {
   updatedPostsArr[indexOfUpdatedPost].comments = updatedPost.comments;
 
   return updatedPostsArr;
+};
+
+const updatePostWithDeletedComment = (allPosts, postId, deletedCommentId) => {
+  const updatedPosts = [...allPosts];
+  const updatedPost = updatedPosts.find(post => post._id === postId);
+
+  const updatedPostIndex = updatedPosts.findIndex(post => post._id === postId);
+  const deletedCommentIndex = updatedPost.comments.findIndex(
+    comment => comment.id === deletedCommentId
+  );
+  updatedPost.comments.splice(deletedCommentIndex, 1);
+  updatedPosts[updatedPostIndex] = updatedPost;
+
+  return updatedPosts;
 };
 
 const postReducer = (state = initialState, action) => {
@@ -91,7 +106,16 @@ const postReducer = (state = initialState, action) => {
         ...state,
         allPosts: updatePostWithNewComment(state.allPosts, action.payload)
       };
-
+    case DELETE_COMMENT:
+      const { postId, commentId } = action.payload;
+      return {
+        ...state,
+        allPosts: updatePostWithDeletedComment(
+          state.allPosts,
+          postId,
+          commentId
+        )
+      };
     default:
       return state;
   }

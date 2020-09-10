@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Button,
-  TextField,
-  Avatar,
-  Modal,
-  DialogContent
-} from '@material-ui/core';
+import { Button, TextField, Avatar, Modal } from '@material-ui/core';
 import {
   ImageOutlined,
   CloseOutlined,
@@ -153,9 +147,9 @@ const Post = () => {
           </form>
         )}
         <Modal className={classes.Post__Modal} open={isSending}>
-          <DialogContent>
+          <div className={classes.Post__ModalContent}>
             <Spinner />
-          </DialogContent>
+          </div>
         </Modal>
       </div>
     </StylesProvider>

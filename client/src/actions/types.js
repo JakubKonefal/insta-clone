@@ -21,6 +21,7 @@ export const GET_FOLLOWED_USERS_POSTS = 'GET_FOLLOWED_USERS_POSTS';
 
 export const LIKE_POST = 'LIKE_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

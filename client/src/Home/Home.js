@@ -29,10 +29,10 @@ const Home = () => {
       : dispatch(getFollowedUsersPosts(token));
   };
   return (
-    <StylesProvider injectFirst>
-      <div className={classes.Home}>
-        <Navbar />
-        <div className={classes.Home__SelectWraper}>
+    <div className={classes.Home}>
+      <Navbar />
+      <div className={classes.Home__SelectWraper}>
+        <StylesProvider injectFirst>
           <Select
             className={classes.Home__Select}
             value={sortingType}
@@ -46,10 +46,10 @@ const Home = () => {
               Followed users posts
             </option>
           </Select>
-        </div>
-        {!allPosts ? <Spinner /> : <PostsList posts={allPosts} />}
+        </StylesProvider>
       </div>
-    </StylesProvider>
+      {!allPosts ? <Spinner /> : <PostsList posts={allPosts} />}
+    </div>
   );
 };
 

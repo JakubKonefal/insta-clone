@@ -8,7 +8,7 @@ import {
 const token = localStorage.getItem('auth-token');
 
 const getIdFromToken = authToken => {
-  const { _id } = authToken ? jwt.decode(authToken) : { _id: '' };
+  const { _id } = authToken ? jwt.decode(authToken) : '';
   return _id;
 };
 

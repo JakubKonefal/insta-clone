@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import { TextField, Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory, Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { login } from '../actions/authActions';
 import classes from './SignIn.module.css';
 
@@ -13,8 +13,6 @@ const SignIn = () => {
   });
   const token = localStorage.getItem('auth-token');
   const error = useSelector(state => state.errors.error);
-  const loginSuccess = useSelector(state => state.auth.loginSuccess);
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const handleInputChange = ({ target }) => {
@@ -27,11 +25,7 @@ const SignIn = () => {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    try {
-      dispatch(login(credentials));
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch(login(credentials));
   };
 
   if (token) {

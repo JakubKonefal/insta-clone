@@ -1,3 +1,5 @@
+@import url('../config/main-colors.css');
+
 .Post {
   width: 33%;
   min-width: 340px;
@@ -127,7 +129,7 @@
   box-sizing: padding-box;
   overflow: hidden;
   padding: 10px;
-  background-color: #f0f2f5;
+  background-color: var(--background);
   border-radius: 6px;
   box-shadow: 2px 2px 8px rgba(black, 0.3);
   border: 0;
