@@ -33,12 +33,21 @@
   font-size: 2em;
 }
 
+.Navbar__Item:hover {
+  text-decoration: underline;
+}
+
 .Navbar__Button {
   background-color: transparent;
   border: none;
   color: red;
+  font-size: 1.7rem;
   font-weight: bold;
-  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.Navbar__Button:hover {
+  color: rgb(255, 93, 93);
 }
 
 .Navbar__MenuIcon {

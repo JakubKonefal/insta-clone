@@ -11,8 +11,8 @@ const SignIn = () => {
     email: '',
     password: ''
   });
-  const token = localStorage.getItem('auth-token');
   const error = useSelector(state => state.errors.error);
+  const { user } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const handleInputChange = ({ target }) => {
@@ -28,7 +28,7 @@ const SignIn = () => {
     dispatch(login(credentials));
   };
 
-  if (token) {
+  if (user) {
     return <Redirect to="/home" />;
   }
 

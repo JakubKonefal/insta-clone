@@ -41,6 +41,7 @@ export default (state = { isLoading: true }, action) => {
       };
     case UPDATE_PROFILE_IMG:
       return {
+        ...state,
         user: {
           ...action.payload
         },
@@ -49,6 +50,7 @@ export default (state = { isLoading: true }, action) => {
       };
     case DELETE_PROFILE_IMG:
       return {
+        ...state,
         user: {
           ...action.payload
         },

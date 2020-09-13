@@ -14,8 +14,7 @@ const SignUp = () => {
     email: '',
     password: ''
   });
-  const token = localStorage.getItem('auth-token');
-  const registerSuccess = useSelector(state => state.auth.registerSuccess);
+  const { user, registerSuccess } = useSelector(state => state.auth);
   const error = useSelector(state => state.errors.error);
   const dispatch = useDispatch();
 
@@ -31,7 +30,7 @@ const SignUp = () => {
     dispatch(register(newUser));
   };
 
-  if (token) {
+  if (user) {
     return <Redirect to="/home" />;
   }
 

@@ -8,6 +8,9 @@ module.exports = (req, res, next) => {
     req.user = verifiedToken;
     next();
   } catch (err) {
-    res.status(400).send(err);
+    const error = {
+      path: []
+    };
+    res.status(400).send(error);
   }
 };

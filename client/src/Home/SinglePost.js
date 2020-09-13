@@ -25,8 +25,8 @@ const SinglePost = ({
     content: ''
   });
   const [refreshKey, setRefreshKey] = useState(false);
-
   const [showInput, setShowInput] = useState(false);
+
   const token = localStorage.getItem('auth-token');
   const clientId = useSelector(state => state.auth.user);
 

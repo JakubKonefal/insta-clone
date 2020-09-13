@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import { Avatar, Button } from '@material-ui/core';
 import { Close, CloudUploadOutlined, DeleteOutline } from '@material-ui/icons';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getProfileInfo,
@@ -70,6 +70,10 @@ const Profile = ({ match }) => {
     };
     dispatch(toggleUserFollow(token, data));
   };
+
+  if (!clientId) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <StylesProvider injectFirst>

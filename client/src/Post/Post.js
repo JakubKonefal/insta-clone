@@ -5,6 +5,7 @@ import {
   CloseOutlined,
   CheckOutlined
 } from '@material-ui/icons';
+import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import Spinner from '../shared/Spinner/Spinner';
@@ -61,6 +62,10 @@ const Post = () => {
     setSelectedImage(null);
     setPreviewFile('');
   };
+
+  if (!user) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <StylesProvider injectFirst>

@@ -162,7 +162,7 @@ router.delete('/post/comment', async (req, res) => {
       { new: true, useFindAndModify: false }
     );
 
-    res.status(200).send({ postId, commentId, msg: 'Post deleted!' });
+    res.status(200).send({ msg: 'Post deleted!' });
   } catch (err) {
     res.status(400).send(err);
   }

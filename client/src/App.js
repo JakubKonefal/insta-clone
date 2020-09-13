@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import ProtectedRoute from './shared/ProtectedRoute/ProtectedRoute';
 import Home from './Home/Home';
 import Profile from './Profile/Profile';
 import Post from './Post/Post';
@@ -14,9 +13,9 @@ function App() {
     <Provider store={store}>
       <Route path="/signup" component={SignUp} />
       <Route path="/" exact component={SignIn} />
-      <ProtectedRoute path="/home" component={Home} />
-      <ProtectedRoute path="/profile/:id" component={Profile} />
-      <ProtectedRoute path="/post" component={Post} />
+      <Route path="/home" component={Home} />
+      <Route path="/profile/:id" component={Profile} />
+      <Route path="/post" component={Post} />
     </Provider>
   );
 }

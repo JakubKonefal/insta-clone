@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Select } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import { getAllPosts, getFollowedUsersPosts } from '../actions/postActions';
 import Navbar from '../shared/Navbar/Navbar';
@@ -16,6 +17,7 @@ const Home = () => {
   const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
   const { allPosts } = useSelector(state => state.posts);
+  const { user } = useSelector(state => state.auth);
   const [sortingType, setSortingType] = useState('all');
 
   const fetchInitialPosts = () => {
@@ -28,6 +30,11 @@ const Home = () => {
       ? dispatch(getAllPosts(token))
       : dispatch(getFollowedUsersPosts(token));
   };
+
+  if (!user) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div className={classes.Home}>
       <Navbar />

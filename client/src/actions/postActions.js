@@ -129,9 +129,7 @@ export const addComment = (token, comment) => dispatch => {
 export const deleteComment = (token, commentId, postId) => dispatch => {
   axios
     .delete('/post/comment', { headers: { token, commentId, postId } })
-    .then(res => {
-      const { postId, commentId } = res.data;
-
+    .then(() => {
       dispatch({ type: DELETE_COMMENT, payload: { postId, commentId } });
     })
     .catch(err => {
