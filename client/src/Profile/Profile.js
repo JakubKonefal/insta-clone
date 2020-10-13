@@ -17,10 +17,11 @@ import defaultUserPic from '../assets/default-user-pic.png';
 import PostThumbnail from './PostThumbnail';
 
 const Profile = ({ match }) => {
-  useEffect(() => {
-    fetchProfileInfo();
-  }, [match.params.id]);
-
+  const fetchProfileInfo = () => {
+    const { id } = match.params;
+    dispatch(getProfileInfo(token, id));
+  };
+  useEffect(fetchProfileInfo, [match.params.id]);
   const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
 
@@ -29,11 +30,6 @@ const Profile = ({ match }) => {
   const [previewFile, setPreviewFile] = useState('');
   const profile = useSelector(state => state.profile);
   const clientId = useSelector(state => state.auth.user);
-
-  const fetchProfileInfo = () => {
-    const { id } = match.params;
-    dispatch(getProfileInfo(token, id));
-  };
 
   const handleImageSelect = e => {
     const image = e.target.files[0];

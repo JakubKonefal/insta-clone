@@ -16,10 +16,11 @@ import Navbar from '../shared/Navbar/Navbar';
 import defaultUserPic from '../assets/default-user-pic.png';
 
 const Post = () => {
-  useEffect(() => {
-    fetchProfileInfo();
-  }, []);
+  const fetchProfileInfo = () => {
+    dispatch(getUserPhoto(token));
+  };
 
+  useEffect(fetchProfileInfo, []);
   const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
 
@@ -29,10 +30,6 @@ const Post = () => {
   const { user } = useSelector(state => state.auth);
   const { isLoading, photo } = useSelector(state => state.profile);
   const { isSending, success } = useSelector(state => state.posts.createdPost);
-
-  const fetchProfileInfo = () => {
-    dispatch(getUserPhoto(token));
-  };
 
   const handleFormSubmit = e => {
     e.preventDefault();

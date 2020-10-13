@@ -10,19 +10,16 @@ import PostsList from './PostsList';
 import classes from './Home.module.css';
 
 const Home = () => {
-  useEffect(() => {
-    fetchInitialPosts();
-  }, []);
+  const fetchInitialPosts = () => {
+    dispatch(getAllPosts(token));
+  };
+  useEffect(fetchInitialPosts, []);
 
   const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
   const { allPosts } = useSelector(state => state.posts);
   const { user } = useSelector(state => state.auth);
   const [sortingType, setSortingType] = useState('all');
-
-  const fetchInitialPosts = () => {
-    dispatch(getAllPosts(token));
-  };
 
   const handlePostsSort = ({ target: { value } }) => {
     setSortingType(value);
